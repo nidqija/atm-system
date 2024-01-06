@@ -1,34 +1,39 @@
 import atm_data
 
 
-print("Welcome to Maybank!")
-
-
-passkey = str(input("Enter your passkey:"))
 
 
 
-for atm_data.method in atm_data.methods:
+while True:
+
+ print("Welcome to Maybank!")
+
+
+ passkey = str(input("Enter your passkey:"))
+
+
+
+ for atm_data.method in atm_data.methods:
    print(atm_data.lines)
    print(atm_data.method)
 
-question = input("which one?")
+ question = input("which one?")
 
-if question == "1":
+ if question == "1":
       balance = float(input("Enter Balance:"))
       deposit = float(input("How much amount do you want to add?"))
       new_pay = balance + deposit
-      print(f"Your new balance :{new_pay}")
+      print(f"Your new balance :RM{new_pay}")
    
 
-elif question == "2":
+ elif question == "2":
      amount = float(input("Enter Amount:"))
      withdraw = float(input("How much do you want to withdraw?:"))
      new_amount = amount - withdraw
-     print(f"Your new amount is :{new_amount}")
+     print(f"Your new amount is :RM{new_amount}")
 
 
-elif question == "3":
+ elif question == "3":
 
      for bill in atm_data.bills:
           print(atm_data.lines)
@@ -47,37 +52,33 @@ elif question == "3":
           if pay < atm_data.tnb : 
                print(f'you have RM{deduc} left to pay ')
                rewind = str(input('do you want to pay more?(y/n)'))
-
-               if rewind == 'y':
-                     new_pay = float(input('Enter payment:'))
-                     new_deduc = deduc - new_pay
-
-                     if new_pay < atm_data.tnb : 
-                        print(f'you have RM{new_deduc} left to pay ')
-                        rewind = str(input('do you want to pay more?(y/n)'))
-                         
-                     if rewind == 'y':
-                          new_pay = float(input('Enter payment:'))
-                          new_deduc = deduc - new_pay
-                          
-                          
-                     
-                     
-                     elif new_pay == atm_data.tnb:
-                         new_deduc = new_pay - deduc
-                         print(f'you current bill: RM{new_deduc}')
-                         print(f'Congratulations! You are fully-paid')
-                          
-
-
+               if rewind == 'n':
+                     print(f'you current bill: RM{deduc}')
+                     print('Thank you for using our service!')
                else:
-                  print(f'you current bill: RM{deduc}')
-                  print('Thank you for using our service!')
+                     pay = float(input('Enter payment:'))
+                     deduc_plus1 = deduc - pay
+                     print(f'you have RM{deduc_plus1} left to pay')
+                     print('Thank you for using our service!')
+                     
 
+                    
+                    
+               
+                    
+                  
 
           else:
                print(f'you have RM{deduc} left to pay')
                print(f'Congratulations! You are fully-paid')
+               print('Thank you for using our service!')
+                    
+                          
+                                              
+            
+
+
+
 
 
      elif current_bill == '2':
@@ -85,16 +86,30 @@ elif question == "3":
           pay = float(input('Enter payment:'))
           deduc_2 = atm_data.air - pay
           
-          if pay < atm_data.tnb : 
+          if pay < atm_data.air : 
                print(f'you have RM{deduc_2} left to pay ')
                rewind = str(input('do you want to pay more?(y/n)'))
                if rewind == 'n':
                   print(f'you current bill: RM{deduc_2}')
                   print('Thank you for using our service!')
+               else:
+                     pay = float(input('Enter payment:'))
+                     deduc_2plus1 = deduc_2 - pay
+                     print(f'you have RM{deduc_2plus1} left to pay')
+                     print('Thank you for using our service!')
+                     
+
+                    
+                    
+               
+                    
+                  
 
           else:
                print(f'you have RM{deduc_2} left to pay')
                print(f'Congratulations! You are fully-paid')
+               print('Thank you for using our service!')
+
 
 
      elif current_bill == '3':
@@ -102,16 +117,61 @@ elif question == "3":
           pay = float(input('Enter payment:'))
           deduc_3 = atm_data.astro - pay
           
-          if pay < atm_data.tnb : 
+          if pay < atm_data.astro : 
                print(f'you have RM{deduc_3} left to pay ')
                rewind = str(input('do you want to pay more?(y/n)'))
                if rewind == 'n':
                   print(f'you current bill: RM{deduc_3}')
                   print('Thank you for using our service!')
+               else:
+                     pay = float(input('Enter payment:'))
+                     deduc_3plus1 = deduc_3 - pay
+                     print(f'you have RM{deduc_3plus1} left to pay')
+                     print('Thank you for using our service!')
                
           else:
                print(f'you have RM{deduc_3} left to pay')
                print(f'Congratulations! You are fully-paid')
+
+
+     
+
+     
+ if input('Do you want to restart? (y/n):') ==  'n':
+     break
+
+                    
+
+
+
+
+
+
+
+
+
+              
+
+
+
+
+      
+
+          
+     
+     
+
+
+     
+     
+
+   
+
+
+
+
+
+
 
 
 
