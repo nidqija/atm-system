@@ -4,36 +4,36 @@ import atm_data
 
 
 
+
+
+print("Welcome to Maybank!")
+
 while True:
-
- print("Welcome to Maybank!")
-
-
- passkey = str(input("Enter your passkey:"))
+  passkey = str(input("Enter your passkey:"))
 
 
 
- for atm_data.method in atm_data.methods:
+  for atm_data.method in atm_data.methods:
    print(atm_data.lines)
    print(atm_data.method)
 
- question = input("which one?")
+  question = input("which one?")
 
- if question == "1":
+  if question == "1":
       balance = float(input("Enter Balance:"))
       deposit = float(input("How much amount do you want to add?"))
       new_pay = balance + deposit
       print(f"Your new balance :RM{new_pay}")
    
 
- elif question == "2":
+  elif question == "2":
      amount = float(input("Enter Amount:"))
      withdraw = float(input("How much do you want to withdraw?:"))
      new_amount = amount - withdraw
      print(f"Your new amount is :RM{new_amount}")
 
 
- elif question == "3":
+  elif question == "3":
 
      for bill in atm_data.bills:
           print(atm_data.lines)
@@ -137,8 +137,42 @@ while True:
      
 
      
- if input('Do you want to restart? (y/n):') ==  'n':
+  if input('Do you want to restart? (y/n):') ==  'n':
+     print("Thank you for using our service!")
      break
+
+                    
+
+
+
+
+
+
+
+
+
+              
+
+
+
+
+      
+
+          
+     
+     
+
+
+     
+     
+
+   
+
+
+
+
+
+
 
                     
 
