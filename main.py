@@ -1,4 +1,9 @@
 import atm_data
+import pandas
+
+data = pandas.read_csv("data.csv")
+print(data)
+
 
 
 
@@ -10,7 +15,8 @@ print("Welcome to Maybank!")
 
 while True:
   passkey = str(input("Enter your passkey:"))
-
+  
+  
 
 
   for atm_data.method in atm_data.methods:
@@ -140,6 +146,39 @@ while True:
   if input('Do you want to restart? (y/n):') ==  'n':
      print("Thank you for using our service!")
      break
+
+                    
+
+
+
+
+
+
+
+
+
+              
+
+
+
+
+      
+
+          
+     
+     
+
+
+     
+     
+
+   
+
+
+
+
+
+
 
                     
 
