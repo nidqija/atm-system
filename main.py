@@ -1,11 +1,15 @@
-import atm_data
-import pandas
-
-data = pandas.read_csv("data.csv")
-print(data)
+import tba.atm_data as atm_data
+import openpyxl 
 
 
 
+wb = openpyxl.load_workbook("raziq.xlsx")
+ws = wb['Sheet1']
+
+
+methods = ( "1. Deposit" , "2.Withdraw" , "3.Balance")
+lines = print("----------------------")
+bills = ("1. TNB" , "2. Air" , "3. Astro")
 
 
 
@@ -14,35 +18,46 @@ print(data)
 print("Welcome to Maybank!")
 
 while True:
-  passkey = str(input("Enter your passkey:"))
-  
+  passkey = int(input("Enter your passkey:"))
   
 
-
-  for atm_data.method in atm_data.methods:
-   print(atm_data.lines)
-   print(atm_data.method)
+ 
+  if passkey == (ws['B2'].value):
+      print( "Welcome!" , (ws['A2'].value))
+  
+  for method in methods:
+   print(lines)
+   print(method)
 
   question = input("which one?")
 
   if question == "1":
-      balance = float(input("Enter Balance:"))
-      deposit = float(input("How much amount do you want to add?"))
-      new_pay = balance + deposit
-      print(f"Your new balance :RM{new_pay}")
+     balance = print(f"Your balance is now {ws['C2'].value}")
+     deposit = float(input("How much amount do you want to add?: "))
+     b_col = ws['C2'].value
+     new_balance =  deposit + b_col
+     print(f"Your new balance: RM{new_balance}")
+     ws['C2'].value = new_balance
+     wb.save('raziq.xlsx')
+      
+     
    
 
   elif question == "2":
-     amount = float(input("Enter Amount:"))
+     amount = print("Your current balance is:" , (ws['C2']).value)
      withdraw = float(input("How much do you want to withdraw?:"))
-     new_amount = amount - withdraw
+     b_col = ws['C2'].value
+     new_amount = b_col - withdraw
      print(f"Your new amount is :RM{new_amount}")
+     ws['C2'].value = new_amount
+     wb.save('raziq.xlsx')
+    
 
 
   elif question == "3":
 
-     for bill in atm_data.bills:
-          print(atm_data.lines)
+     for bill in bills:
+          print(lines)
           print(bill)
 
 
@@ -51,11 +66,14 @@ while True:
      current_bill = str(input("Enter Bill type:"))
 
      if current_bill == '1':
-          print(f'your tnb bill is RM{atm_data.tnb}')
+          print(f'your tnb bill is RM' , (ws['D2']).value)
           pay = float(input('Enter payment:'))
-          deduc = atm_data.tnb - pay
+          d_col = (ws['D2']).value
+          deduc = d_col - pay
+          (ws['D2']).value = deduc
+          wb.save('raziq.xlsx')
           
-          if pay < atm_data.tnb : 
+          if pay < deduc : 
                print(f'you have RM{deduc} left to pay ')
                rewind = str(input('do you want to pay more?(y/n)'))
                if rewind == 'n':
@@ -63,9 +81,12 @@ while True:
                      print('Thank you for using our service!')
                else:
                      pay = float(input('Enter payment:'))
-                     deduc_plus1 = deduc - pay
+                     d_col = (ws['D2']).value
+                     deduc_plus1 = d_col - pay
+                     deduc_plus1 = (ws['D2']).value
                      print(f'you have RM{deduc_plus1} left to pay')
                      print('Thank you for using our service!')
+                     wb.save('raziq.xlsx')
                      
 
                     
@@ -146,6 +167,11 @@ while True:
   if input('Do you want to restart? (y/n):') ==  'n':
      print("Thank you for using our service!")
      break
+  
+
+
+
+wb.save("raziq.xlsx")
 
                     
 
