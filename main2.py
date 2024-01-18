@@ -56,7 +56,16 @@ def choice():
       payment()
 
 
-  elif choice == 'N':
+
+  elif choice == 4:
+    print("Name : " , (ws['A2']).value )
+    print("Balance : RM" , ws['C2'].value )
+    print("TNB Bill : RM" ,  ws['D2'].value )
+    print("Water Bill : RM" , ws['E2'].value )
+    print("Astro Bill: RM" , ws['F2'].value )
+
+
+  elif choice == 0:
      print("Thank you for using our service!")
 
 
@@ -75,6 +84,46 @@ def payment():
    print('------------------')
    print(ws['F1'].value , " = RM " , ws['F2'].value )
 
+   payment = float(input("Enter choice:"))
+   if payment == 1 :
+      print(f"Your" , ws['D1'].value , "is RM" ,  ws['D2'].value )
+      pay = float(input("Enter Payment:"))
+      new_pay =  ws['D2'].value - pay
+      ws['D2'].value = new_pay
+      wb.save('raziq.xlsx')
+
+      print("Your bill is now RM"  , ws['D2'].value )
+      print("Thank you for using our service!")
+
+
+   elif payment == 2:
+      print(f"Your" , ws['E1'].value , "is RM" ,  ws['E2'].value )
+      pay2 = float(input("Enter Payment:"))
+      new_pay2 =  ws['E2'].value - pay2
+      ws['E2'].value = new_pay2
+      wb.save('raziq.xlsx')
+
+      print("Your bill is now RM"  , ws['E2'].value )
+      print("Thank you for using our service!")
+
+
+   elif payment == 3:
+      print(f"Your" , ws['F1'].value , "is RM" ,  ws['F2'].value )
+      pay3 = float(input("Enter Payment:"))
+      new_pay3 =  ws['F2'].value - pay3
+      ws['F2'].value = new_pay3
+      wb.save('raziq.xlsx')
+
+      print("Your bill is now RM"  , ws['F2'].value )
+      print("Thank you for using our service!")
+
+
+
+
+
+   
+
+
 
 
 def program():
@@ -82,12 +131,15 @@ def program():
    print('------------------------------')
    print('1. Cash Deposit')
    print('------------------------------')
-   print('2.Cash Withdrawal')
+   print('2. Cash Withdrawal')
    print('------------------------------')
-   print('3.Bill Payment')
+   print('3. Bill Payment')
+   print('------------------------------')
+   print('4. View my account ')
    print('------------------------------')
    print("Enter your choice or type N to cancel")
 
 
 login()
+
 
