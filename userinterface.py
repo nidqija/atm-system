@@ -1,4 +1,5 @@
 import tkinter as tk
+
 import openpyxl
 
 class GUI(tk.Tk):
@@ -39,7 +40,7 @@ class loginpage(tk.Frame):
         title = tk.Label(self , text='Welcome to XYZ Bank!' , font=('Helvetica' , 35 , 'bold' ,) , bg='blue' , fg='yellow')
         title.pack(padx= 20 , pady= 30)
 
-        my_passkey = tk.StringVar()
+        my_passkey = tk.IntVar()
 
         label = tk.Entry(self , text = 'Enter Account Number:' , textvariable=my_passkey , font=('Helvetica' , 25) , bg='white' )
         label.pack()
@@ -47,15 +48,15 @@ class loginpage(tk.Frame):
         button = tk.Button(self , text = 'Submit' , font=('Helvetica' , 20) ,height=1 , width= 30 , bg='yellow' ,command=lambda:check_password())
         button.pack(padx = 10 , pady= 20)
 
-        incorrect_pass_label = tk.Label(self , text="" , fg="black")
-        incorrect_pass_label.pack(fill='both' , expand=True)
+        incorrect_pass_label = tk.Label(self , text="" , fg="white" , bg='blue' , font=('Helvetica' , 17))
+        incorrect_pass_label.pack(fill='both' , expand=True , padx=10 , pady=20)
 
         def check_password():
            wb = openpyxl.load_workbook('raziq.xlsx')
            sheet = wb.active
            for row in sheet.rows:
               if my_passkey.get() == row[1].value:
-                   controller.show_frame('loginpage')
+                   controller.show_frame('welcomepage')
 
               else:
                   incorrect_pass_label['text'] = 'Incorrect Password!'
@@ -66,12 +67,29 @@ class loginpage(tk.Frame):
 
 
 class welcomepage(tk.Frame):
+     wb = openpyxl.load_workbook('raziq.xlsx')
+     sheet = wb.active
+
+
+        
      def __init__(self, parent , controller):
-        tk.Frame.__init__(self , parent)
-        self.configure(background='blue')
-        self.controller = controller
-        title = tk.Label(self , text='Hello' , font=('Helvetica' , 35 , 'bold' ,) , bg='blue' , fg='yellow' )
-        title.pack(padx= 20 , pady= 30)
+        wb = openpyxl.load_workbook('raziq.xlsx')
+        sheet = wb.active
+
+        for row in sheet.rows:
+
+          tk.Frame.__init__(self , parent)
+          self.configure(background='blue')
+          self.controller = controller
+          title = tk.Label(self , text=f'Hello {row[0].value}', font=('Helvetica' , 35 , 'bold' ,) , bg='blue' , fg='yellow' )
+          title.pack(padx= 20 , pady= 30)
+
+        
+
+
+
+
+
 
      
     
