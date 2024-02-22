@@ -1,6 +1,8 @@
 import tkinter as tk
-
+import atm_data as atm
 import openpyxl
+
+
 
 class GUI(tk.Tk):
 
@@ -57,25 +59,19 @@ class loginpage(tk.Frame):
            for row in sheet.rows:
               if my_passkey.get() == row[1].value:
                    controller.show_frame('welcomepage')
-
               else:
                   incorrect_pass_label['text'] = 'Incorrect Password!'
-    
+
+
+      
 
 
 
-
-
-class welcomepage(tk.Frame):
-     wb = openpyxl.load_workbook('raziq.xlsx')
-     sheet = wb.active
-
-
-        
+class welcomepage(tk.Frame):  
+         
      def __init__(self, parent , controller):
         wb = openpyxl.load_workbook('raziq.xlsx')
         sheet = wb.active
-
         for row in sheet.rows:
 
           tk.Frame.__init__(self , parent)
@@ -83,6 +79,17 @@ class welcomepage(tk.Frame):
           self.controller = controller
           title = tk.Label(self , text=f'Hello {row[0].value}', font=('Helvetica' , 35 , 'bold' ,) , bg='blue' , fg='yellow' )
           title.pack(padx= 20 , pady= 30)
+          for i in atm.methods:
+              button = tk.Button(self , text= i , fg='white' , bg='blue' , height=1 , width=20 , font=('Helvetica' , 25 ))
+              button.pack(padx=10 , pady=20)
+
+
+
+
+
+     
+        
+
 
         
 
@@ -102,5 +109,5 @@ class welcomepage(tk.Frame):
 
 if __name__ == "__main__":
     app = GUI()
-    app.geometry('600x500')
+    app.geometry('700x500')
     app.mainloop()
