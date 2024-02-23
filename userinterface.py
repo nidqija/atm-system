@@ -15,7 +15,7 @@ class GUI(tk.Tk):
         
 
         self.frames = {}
-        for F in (loginpage , welcomepage , deposit ):
+        for F in (loginpage , welcomepage , deposit , view ):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -84,7 +84,7 @@ class welcomepage(tk.Frame):
           button1.pack(padx=20 , pady=10)
           button1 = tk.Button(self , text= 'Bills' , fg='black' , bg='yellow' , height=1 , width=20 , font=('Helvetica' , 25 ))
           button1.pack(padx=20 , pady=10)
-          button1 = tk.Button(self , text= 'View Account' , fg='black' , bg='yellow' , height=1 , width=20 , font=('Helvetica' , 25 ))
+          button1 = tk.Button(self , text= 'View Account' , fg='black' , bg='yellow' , height=1 , width=20 , font=('Helvetica' , 25 ) , command=lambda:controller.show_frame('view'))
           button1.pack(padx=20 , pady=10)
 
 
@@ -97,28 +97,38 @@ class deposit(tk.Frame):
            tk.Frame.__init__(self , parent)
            self.controller = controller
            self.configure(bg='blue')
-           title = tk.Label(self , text='Your Current Deposit Amount :' , font=('Helvetica' , 25) , fg='yellow' , bg='blue')
-           title.pack(padx=10 , pady=20)
-           deposit_statement = tk.Label(self , text=f'RM {row[2].value}' , font=('Helvetica' , 25) , fg='yellow' , bg='blue')
-           deposit_statement.pack(padx=10 , pady=20)
-
-
-
-
-
-     
+           title = tk.Label(self , text='Your Current Deposit Amount :' , font=('Helvetica' , 25 , 'bold') , fg='yellow' , bg='blue')
+           title.pack(padx=10, pady=20)
+           deposit_statement = tk.Label(self , text=f'RM {row[2].value}' , font=('Helvetica' , 40 , 'bold') , fg='yellow' , bg='blue')
+           deposit_statement.pack(pady=10)
+           pay = tk.Button(self , text='Pay' , font=('Helvetica' , 25) , fg='black' , bg='yellow' , width=10)
+           pay.pack(padx=30 , pady=30)
+           back = tk.Button(self , text='Return' , font=('Helvetica' , 25) , fg='black' , bg='yellow' , width=10 , command=lambda:controller.show_frame('welcomepage'))
+           back.pack(padx=10 , pady=20)
         
 
 
-        
+class view(tk.Frame):
+    def __init__(self, parent , controller ):
+        wb = openpyxl.load_workbook('raziq.xlsx')
+        sheet = wb.active
+
+        for row in sheet.rows:
+
+           tk.Frame.__init__(self , parent)
+           self.controller = controller
+           self.configure(bg='blue')
+           label = tk.Label(self , text='Below are your current statement:' , fg='yellow' , bg='blue' , font=('Helvetica' , 25))
+           label.pack()
+           for i in row:
+                 label = tk.Label(self , text=f'{i.value}' , fg='yellow' , bg='blue' , font=('Helvetica' , 25))
+                 label.pack()
+
+
+                   
 
 
 
-
-
-
-     
-    
 
 
 
