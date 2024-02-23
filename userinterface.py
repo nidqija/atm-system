@@ -119,10 +119,20 @@ class view(tk.Frame):
            self.controller = controller
            self.configure(bg='blue')
            label = tk.Label(self , text='Below are your current statement:' , fg='yellow' , bg='blue' , font=('Helvetica' , 25))
-           label.pack()
-           for i in row:
-                 label = tk.Label(self , text=f'{i.value}' , fg='yellow' , bg='blue' , font=('Helvetica' , 25))
-                 label.pack()
+           label.pack(padx=10 , pady=30)
+           label = tk.Label(self , text=f'Account Name : {row[0].value}' , fg='yellow' , bg='blue' , font=('Helvetica' , 25 , 'bold') , justify='left' , anchor='w')
+           label.pack(padx=10 , pady=2)
+           label = tk.Label(self , text=f' Balance : RM{row[2].value}' , fg='yellow' , bg='blue' , font=('Helvetica' , 25 , 'bold') , justify='left' , anchor='w')
+           label.pack(padx=10 , pady=2)
+           label = tk.Label(self , text=f' TNB Bill : RM{row[3].value}' , fg='yellow' , bg='blue' , font=('Helvetica' , 25 , 'bold'))
+           label.pack(padx=10 , pady=2)
+           label = tk.Label(self , text=f' Water Bill : RM{row[4].value}' , fg='yellow' , bg='blue' , font=('Helvetica' , 25 , 'bold'))
+           label.pack(padx=10 , pady=2)
+           label = tk.Label(self , text=f'ASTRO Bill : RM{row[5].value}' , fg='yellow' , bg='blue' , font=('Helvetica' , 25 , 'bold'))
+           label.pack(padx=10 , pady=1)
+           back = tk.Button(self , text='Return' , font=('Helvetica' , 25) , fg='black' , bg='yellow' , width=10 , command=lambda:controller.show_frame('welcomepage'))
+           back.pack(padx=10 , pady=30)
+           
 
 
                    
