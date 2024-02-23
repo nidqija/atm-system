@@ -1,5 +1,4 @@
 import tkinter as tk
-import atm_data as atm
 import openpyxl
 
 
@@ -16,7 +15,7 @@ class GUI(tk.Tk):
         
 
         self.frames = {}
-        for F in (loginpage , welcomepage ):
+        for F in (loginpage , welcomepage , deposit ):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -79,9 +78,29 @@ class welcomepage(tk.Frame):
           self.controller = controller
           title = tk.Label(self , text=f'Hello {row[0].value}', font=('Helvetica' , 35 , 'bold' ,) , bg='blue' , fg='yellow' )
           title.pack(padx= 20 , pady= 30)
-          for i in atm.methods:
-              button = tk.Button(self , text= i , fg='white' , bg='blue' , height=1 , width=20 , font=('Helvetica' , 25 ))
-              button.pack(padx=10 , pady=20)
+          button1 = tk.Button(self , text= 'Deposit' , fg='black' , bg='yellow' , height=1 , width=20 , font=('Helvetica' , 25 ) , command=lambda:controller.show_frame('deposit'))
+          button1.pack(padx=20 , pady=10)
+          button1 = tk.Button(self , text= 'Withdraw' , fg='black' , bg='yellow' , height=1 , width=20 , font=('Helvetica' , 25 ))
+          button1.pack(padx=20 , pady=10)
+          button1 = tk.Button(self , text= 'Bills' , fg='black' , bg='yellow' , height=1 , width=20 , font=('Helvetica' , 25 ))
+          button1.pack(padx=20 , pady=10)
+          button1 = tk.Button(self , text= 'View Account' , fg='black' , bg='yellow' , height=1 , width=20 , font=('Helvetica' , 25 ))
+          button1.pack(padx=20 , pady=10)
+
+
+class deposit(tk.Frame):
+    def __init__(self , parent , controller):
+        wb = openpyxl.load_workbook('raziq.xlsx')
+        sheet = wb.active
+
+        for row in sheet.rows:
+           tk.Frame.__init__(self , parent)
+           self.controller = controller
+           self.configure(bg='blue')
+           title = tk.Label(self , text='Your Current Deposit Amount :' , font=('Helvetica' , 25) , fg='yellow' , bg='blue')
+           title.pack(padx=10 , pady=20)
+           deposit_statement = tk.Label(self , text=f'RM {row[2].value}' , font=('Helvetica' , 25) , fg='yellow' , bg='blue')
+           deposit_statement.pack(padx=10 , pady=20)
 
 
 
