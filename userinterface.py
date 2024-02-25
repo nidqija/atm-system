@@ -15,7 +15,7 @@ class GUI(tk.Tk):
         
 
         self.frames = {}
-        for F in (loginpage , welcomepage , deposit , view , cashIn , newDeposit ):
+        for F in (loginpage , welcomepage , deposit , view , cashIn , decision ):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -59,7 +59,7 @@ class loginpage(tk.Frame):
               if my_passkey.get() == row[1].value:
                    controller.show_frame('welcomepage')
               else:
-                  incorrect_pass_label['text'] = 'Incorrect Password!'
+                  incorrect_pass_label['text'] = 'Incorrect Password'
 
 
       
@@ -144,6 +144,8 @@ class cashIn(tk.Frame):
            tk.Frame.__init__(self , parent)
            self.controller= controller
            self.configure(bg='blue')
+           rusure = tk.Label(self , text='' , fg='yellow' , bg='blue' , font=('Helvetica' , 35 , 'bold'))
+           rusure.pack(pady=10 , padx=40)
            label = tk.Label(self , text='Enter Amount:' , fg='yellow' , bg='blue' , font=('Helvetica' , 35 , 'bold') )
            label.pack(padx=10 , pady=20)
            entry = tk.Entry(self , font=('Helvetica' , 35 ))
@@ -152,22 +154,36 @@ class cashIn(tk.Frame):
            button.pack()
            invalid = tk.Label(self , text='' , fg='yellow' , bg='blue' , font=('Helvetica' , 25))
            invalid.pack(padx=10 , pady=10)
+        
 
 
            def checkDepo():
               try:
                     float(entry.get())
-                    controller.show_frame('newDeposit')
+                    rusure['text'] = ' are you sure?'
+                    button2 = tk.Button(self , text='Yes'  ,bg='yellow' , fg='black' , font=('Helvetica' , 25) , width=20)
+                    button2.pack()
+                    button3 = tk.Button( self , text='No' , bg='yellow' , fg='black' , font=('Helvetica' , 25) , width=20)
+                    button3.pack()
+                    label.forget()
+                    button.forget()
+                    
+
 
               except ValueError:
                     invalid['text'] = 'Invalid Input'
 
+           
 
-class newDeposit(tk.Frame):
+class decision(tk.Frame):
     def __init__(self ,parent , controller):
            tk.Frame.__init__(self , parent)
            self.controller= controller
            self.configure(bg='blue')
+           
+
+
+           
         
 
            
