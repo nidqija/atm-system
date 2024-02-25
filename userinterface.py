@@ -15,7 +15,7 @@ class GUI(tk.Tk):
         
 
         self.frames = {}
-        for F in (loginpage , welcomepage , deposit , view ):
+        for F in (loginpage , welcomepage , deposit , view , cashIn ):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -101,10 +101,15 @@ class deposit(tk.Frame):
            title.pack(padx=10, pady=20)
            deposit_statement = tk.Label(self , text=f'RM {row[2].value}' , font=('Helvetica' , 40 , 'bold') , fg='yellow' , bg='blue')
            deposit_statement.pack(pady=10)
-           pay = tk.Button(self , text='Pay' , font=('Helvetica' , 25) , fg='black' , bg='yellow' , width=10)
+           pay = tk.Button(self , text='Cash In' , font=('Helvetica' , 25) , fg='black' , bg='yellow' , width=10 , command=lambda:controller.show_frame('cashIn'))
            pay.pack(padx=30 , pady=30)
            back = tk.Button(self , text='Return' , font=('Helvetica' , 25) , fg='black' , bg='yellow' , width=10 , command=lambda:controller.show_frame('welcomepage'))
            back.pack(padx=10 , pady=20)
+
+
+
+
+
         
 
 
@@ -132,10 +137,28 @@ class view(tk.Frame):
            label.pack(padx=10 , pady=1)
            back = tk.Button(self , text='Return' , font=('Helvetica' , 25) , fg='black' , bg='yellow' , width=10 , command=lambda:controller.show_frame('welcomepage'))
            back.pack(padx=10 , pady=30)
-           
 
 
+class cashIn(tk.Frame):
+    def __init__(self, parent , controller):
+
+        wb = openpyxl.load_workbook('raziq.xlsx')
+        sheet = wb.active
+
+        for row in sheet.rows:
+           tk.Frame.__init__(self , parent)
+           self.controller= controller
+           self.configure(bg='blue')
+           label = tk.Label(self , text='Enter Amount:' , fg='yellow' , bg='blue' , font=('Helvetica' , 35) )
+           label.pack(padx=10 , pady=20)
+           entry = tk.Entry(self , font=('Helvetica' , 35 ))
+           entry.pack()
+
+
+
+          
                    
+           
 
 
 
