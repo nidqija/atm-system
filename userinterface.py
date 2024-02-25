@@ -15,7 +15,7 @@ class GUI(tk.Tk):
         
 
         self.frames = {}
-        for F in (loginpage , welcomepage , deposit , view , cashIn ):
+        for F in (loginpage , welcomepage , deposit , view , cashIn , newDeposit ):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -141,18 +141,41 @@ class view(tk.Frame):
 
 class cashIn(tk.Frame):
     def __init__(self, parent , controller):
-
-        wb = openpyxl.load_workbook('raziq.xlsx')
-        sheet = wb.active
-
-        for row in sheet.rows:
            tk.Frame.__init__(self , parent)
            self.controller= controller
            self.configure(bg='blue')
-           label = tk.Label(self , text='Enter Amount:' , fg='yellow' , bg='blue' , font=('Helvetica' , 35) )
+           label = tk.Label(self , text='Enter Amount:' , fg='yellow' , bg='blue' , font=('Helvetica' , 35 , 'bold') )
            label.pack(padx=10 , pady=20)
            entry = tk.Entry(self , font=('Helvetica' , 35 ))
-           entry.pack()
+           entry.pack(padx=10 , pady=20)
+           button = tk.Button(self , text='Submit' , fg='black' , bg='yellow' , font=('Helvetica' , 25) , command=lambda:checkDepo())
+           button.pack()
+           invalid = tk.Label(self , text='' , fg='yellow' , bg='blue' , font=('Helvetica' , 25))
+           invalid.pack(padx=10 , pady=10)
+
+
+           def checkDepo():
+              try:
+                    float(entry.get())
+                    controller.show_frame('newDeposit')
+
+              except ValueError:
+                    invalid['text'] = 'Invalid Input'
+
+
+class newDeposit(tk.Frame):
+    def __init__(self ,parent , controller):
+           tk.Frame.__init__(self , parent)
+           self.controller= controller
+           self.configure(bg='blue')
+        
+
+           
+
+           
+               
+               
+
 
 
 
