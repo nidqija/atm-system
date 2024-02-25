@@ -161,9 +161,9 @@ class cashIn(tk.Frame):
               try:
                     float(entry.get())
                     rusure['text'] = ' are you sure?'
-                    button2 = tk.Button(self , text='Yes'  ,bg='yellow' , fg='black' , font=('Helvetica' , 25) , width=20)
+                    button2 = tk.Button(self , text='Yes'  ,bg='yellow' , fg='black' , font=('Helvetica' , 25) , width=20 , command=lambda:controller.show_frame('decision'))
                     button2.pack()
-                    button3 = tk.Button( self , text='No' , bg='yellow' , fg='black' , font=('Helvetica' , 25) , width=20)
+                    button3 = tk.Button( self , text='No' , bg='yellow' , fg='black' , font=('Helvetica' , 25) , width=20 , command=lambda:controller.show_frame('deposit'))
                     button3.pack()
                     label.forget()
                     button.forget()
@@ -172,6 +172,16 @@ class cashIn(tk.Frame):
 
               except ValueError:
                     invalid['text'] = 'Invalid Input'
+
+
+
+
+       
+
+               
+
+                    
+                   
 
            
 
