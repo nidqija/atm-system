@@ -15,7 +15,7 @@ class GUI(tk.Tk):
         
 
         self.frames = {}
-        for F in (loginpage , welcomepage , deposit , view , cashIn , decision ):
+        for F in (loginpage , welcomepage , deposit , view , cashIn):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -160,13 +160,19 @@ class cashIn(tk.Frame):
            def checkDepo():
               try:
                     float(entry.get())
-                    rusure['text'] = ' are you sure?'
+                    rusure['text'] = 'Are you sure?'
                     button2 = tk.Button(self , text='Yes'  ,bg='yellow' , fg='black' , font=('Helvetica' , 25) , width=20 , command=lambda:controller.show_frame('decision'))
-                    button2.pack()
-                    button3 = tk.Button( self , text='No' , bg='yellow' , fg='black' , font=('Helvetica' , 25) , width=20 , command=lambda:controller.show_frame('deposit'))
+                    button2.pack(pady=5)
+                    button3 = tk.Button( self , text='No' , bg='yellow' , fg='black' , font=('Helvetica' , 25) , width=20 , command=lambda:no())
                     button3.pack()
                     label.forget()
                     button.forget()
+                    def no():
+                            rusure['text'] = 'Enter Amount :'
+                            button2.forget()
+                            button3.forget()
+                            button.pack()
+               
                     
 
 
@@ -174,7 +180,10 @@ class cashIn(tk.Frame):
                     invalid['text'] = 'Invalid Input'
 
 
+          
 
+
+  
 
        
 
@@ -191,25 +200,6 @@ class decision(tk.Frame):
            self.controller= controller
            self.configure(bg='blue')
            
-
-
-           
-        
-
-           
-
-           
-               
-               
-
-
-
-
-          
-                   
-           
-
-
 
 
 
