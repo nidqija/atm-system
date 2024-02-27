@@ -144,10 +144,9 @@ class cashIn(tk.Frame):
            tk.Frame.__init__(self , parent)
            self.controller= controller
            self.configure(bg='blue')
-           rusure = tk.Label(self , text='' , fg='yellow' , bg='blue' , font=('Helvetica' , 35 , 'bold'))
+           rusure = tk.Label(self , text='Enter Amount:' , fg='yellow' , bg='blue' , font=('Helvetica' , 35 , 'bold'))
            rusure.pack(pady=10 , padx=40)
-           label = tk.Label(self , text='Enter Amount:' , fg='yellow' , bg='blue' , font=('Helvetica' , 35 , 'bold') )
-           label.pack(padx=10 , pady=20)
+          
            entry = tk.Entry(self , font=('Helvetica' , 35 ))
            entry.pack(padx=10 , pady=20)
            button = tk.Button(self , text='Submit' , fg='black' , bg='yellow' , font=('Helvetica' , 25) , command=lambda:checkDepo())
@@ -165,7 +164,6 @@ class cashIn(tk.Frame):
                     button2.pack(pady=5)
                     button3 = tk.Button( self , text='No' , bg='yellow' , fg='black' , font=('Helvetica' , 25) , width=20 , command=lambda:no())
                     button3.pack()
-                    label.forget()
                     button.forget()
                     def no():
                             rusure['text'] = 'Enter Amount :'
@@ -200,6 +198,25 @@ class decision(tk.Frame):
            self.controller= controller
            self.configure(bg='blue')
            
+
+
+           
+        
+
+           
+
+           
+               
+               
+
+
+
+
+          
+                   
+           
+
+
 
 
 
