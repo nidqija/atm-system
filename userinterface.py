@@ -141,14 +141,18 @@ class view(tk.Frame):
 
 class cashIn(tk.Frame):
     def __init__(self, parent , controller):
+        wb = openpyxl.load_workbook('raziq.xlsx')
+        sheet = wb.active
+
+        for row in sheet.rows:
            tk.Frame.__init__(self , parent)
            self.controller= controller
            self.configure(bg='blue')
            rusure = tk.Label(self , text='Enter Amount:' , fg='yellow' , bg='blue' , font=('Helvetica' , 35 , 'bold'))
            rusure.pack(pady=10 , padx=40)
-          
-           entry = tk.Entry(self , font=('Helvetica' , 35 ))
-           entry.pack(padx=10 , pady=20)
+           entry_deposit = tk.StringVar()
+           entry2 = tk.Entry(self , font=('Helvetica' , 35 ) , textvariable=entry_deposit)
+           entry2.pack(padx=10 , pady=20)
            button = tk.Button(self , text='Submit' , fg='black' , bg='yellow' , font=('Helvetica' , 25) , command=lambda:checkDepo())
            button.pack()
            invalid = tk.Label(self , text='' , fg='yellow' , bg='blue' , font=('Helvetica' , 25))
@@ -158,9 +162,9 @@ class cashIn(tk.Frame):
 
            def checkDepo():
               try:
-                    float(entry.get())
+                    float(entry2.get())
                     rusure['text'] = 'Are you sure?'
-                    button2 = tk.Button(self , text='Yes'  ,bg='yellow' , fg='black' , font=('Helvetica' , 25) , width=20 , command=lambda:controller.show_frame('decision'))
+                    button2 = tk.Button(self , text='Yes'  ,bg='yellow' , fg='black' , font=('Helvetica' , 25) , width=20 , command=lambda:sum())
                     button2.pack(pady=5)
                     button3 = tk.Button( self , text='No' , bg='yellow' , fg='black' , font=('Helvetica' , 25) , width=20 , command=lambda:no())
                     button3.pack()
@@ -170,12 +174,51 @@ class cashIn(tk.Frame):
                             button2.forget()
                             button3.forget()
                             button.pack()
+
+                    def sum():   
+                       
+
+                           new_deposit =  float(entry2.get()) + float(row[2].value)
+                           label = tk.Label(text='' , fg='yellow' , bg='blue')
+                           label.pack()
+                           label['text'] = new_deposit
+                           row[2].value = new_deposit
+                           wb.save('raziq.xlsx')
+
+
+                     
                
                     
 
 
               except ValueError:
                     invalid['text'] = 'Invalid Input'
+
+
+
+
+           
+                     
+                    
+                            
+
+                        
+
+
+
+class newDeposit(tk.Frame):
+    def __init__(self,parent , controller):
+        wb = openpyxl.load_workbook('raziq.xlsx')
+        sheet = wb.active
+
+        for row in sheet.rows:
+
+          tk.Frame.__init__(self , parent)
+          self.controller = controller
+          self.configure(bg='blue')
+          label = tk.Label(self , text='Your new deposit:' , fg='yellow' , bg='blue')
+          label.pack()
+
 
 
           
