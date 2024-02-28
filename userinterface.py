@@ -15,7 +15,7 @@ class GUI(tk.Tk):
         
 
         self.frames = {}
-        for F in (loginpage , welcomepage , deposit , view , cashIn , newDeposit):
+        for F in (loginpage , welcomepage , deposit , view , cashIn , newDeposit , farewell):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -221,7 +221,7 @@ class newDeposit(tk.Frame):
           label.pack(padx=10 , pady=20)
           resume = tk.Button(self , text='Return' , fg='black' , bg='yellow' , font=('Helvetica' , 25) , width=10)
           resume.pack(padx=10 , pady=20)
-          finish = tk.Button(self , text='Finish' , fg='black' , bg='yellow' , font=('Helvetica' , 25) , width=10)
+          finish = tk.Button(self , text='Finish' , fg='black' , bg='yellow' , font=('Helvetica' , 25) , width=10 , command=lambda:controller.show_frame('farewell'))
           finish.pack(padx=10 , pady=20)
 
 
@@ -240,11 +240,15 @@ class newDeposit(tk.Frame):
 
            
 
-class decision(tk.Frame):
+class farewell(tk.Frame):
     def __init__(self ,parent , controller):
            tk.Frame.__init__(self , parent)
            self.controller= controller
            self.configure(bg='blue')
+           label = tk.Label( self , text='Thank you!' , fg='yellow' , bg='blue' , font=('Helvetica' , 35 , 'bold'))
+           label.pack(padx=10 , pady=30)
+           label2 = tk.Label( self , text='We hope to see you again!' , fg='yellow' , bg='blue' , font=('Helvetica' , 35 , 'bold'))
+           label2.pack(padx=10 , pady=30)
            
 
 
