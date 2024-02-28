@@ -15,7 +15,7 @@ class GUI(tk.Tk):
         
 
         self.frames = {}
-        for F in (loginpage , welcomepage , deposit , view , cashIn):
+        for F in (loginpage , welcomepage , deposit , view , cashIn , newDeposit):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -179,11 +179,10 @@ class cashIn(tk.Frame):
                        
 
                            new_deposit =  float(entry2.get()) + float(row[2].value)
-                           label = tk.Label(text='' , fg='yellow' , bg='blue')
-                           label.pack()
-                           label['text'] = new_deposit
                            row[2].value = new_deposit
                            wb.save('raziq.xlsx')
+                           controller.show_frame('newDeposit')
+
 
 
                      
@@ -216,8 +215,14 @@ class newDeposit(tk.Frame):
           tk.Frame.__init__(self , parent)
           self.controller = controller
           self.configure(bg='blue')
-          label = tk.Label(self , text='Your new deposit:' , fg='yellow' , bg='blue')
-          label.pack()
+          congrats = tk.Label(self , text= ' Thank you for your service!' , fg='yellow' , bg='blue' , font=('Helvetica' , 35) )
+          congrats.pack(padx=10 , pady=20)
+          label = tk.Label(self , text= f'Your new balance : RM {row[2].value}', fg='yellow' , bg='blue' , font=('Helvetica' , 30 , 'bold'))
+          label.pack(padx=10 , pady=20)
+          resume = tk.Button(self , text='Return' , fg='black' , bg='yellow' , font=('Helvetica' , 25) , width=10)
+          resume.pack(padx=10 , pady=20)
+          finish = tk.Button(self , text='Finish' , fg='black' , bg='yellow' , font=('Helvetica' , 25) , width=10)
+          finish.pack(padx=10 , pady=20)
 
 
 
