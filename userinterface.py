@@ -1,6 +1,8 @@
 import tkinter as tk
 import openpyxl
 
+wb = openpyxl.load_workbook('raziq.xlsx')
+sheet = wb.active
 
 
 class GUI(tk.Tk):
@@ -29,8 +31,9 @@ class GUI(tk.Tk):
         frame = self.frames[page_name]
         frame.tkraise()
 
+for row in sheet.rows:
 
-class loginpage(tk.Frame):
+ class loginpage(tk.Frame):
     
     def __init__(self, parent , controller):
 
@@ -66,7 +69,7 @@ class loginpage(tk.Frame):
 
 
 
-class welcomepage(tk.Frame):  
+ class welcomepage(tk.Frame):  
          
      def __init__(self, parent , controller):
         wb = openpyxl.load_workbook('raziq.xlsx')
@@ -88,7 +91,7 @@ class welcomepage(tk.Frame):
           button1.pack(padx=20 , pady=10)
 
 
-class deposit(tk.Frame):
+ class deposit(tk.Frame):
     def __init__(self , parent , controller):
         wb = openpyxl.load_workbook('raziq.xlsx')
         sheet = wb.active
@@ -113,36 +116,45 @@ class deposit(tk.Frame):
         
 
 
-class view(tk.Frame):
+ class view(tk.Frame):
     def __init__(self, parent , controller ):
         wb = openpyxl.load_workbook('raziq.xlsx')
         sheet = wb.active
+        wb.save('raziq.xlsx')
 
         for row in sheet.rows:
 
            tk.Frame.__init__(self , parent)
            self.controller = controller
            self.configure(bg='blue')
-           label = tk.Label(self , text='Below are your current statement:' , fg='yellow' , bg='blue' , font=('Helvetica' , 25))
-           label.pack(padx=10 , pady=10)
-           label = tk.Label(self , text=f'Account Name : {row[0].value}' , fg='yellow' , bg='blue' , font=('Helvetica' , 25 , 'bold') , justify='left' , anchor='w')
-           label.pack(padx=10 , pady=2)
-           label = tk.Label(self , text=f' Balance : RM{row[2].value}' , fg='yellow' , bg='blue' , font=('Helvetica' , 25 , 'bold') , justify='left' , anchor='w')
-           label.pack(padx=10 , pady=2)
-           label = tk.Label(self , text=f' TNB Bill : RM{row[3].value}' , fg='yellow' , bg='blue' , font=('Helvetica' , 25 , 'bold'))
-           label.pack(padx=10 , pady=2)
-           label = tk.Label(self , text=f' Water Bill : RM{row[4].value}' , fg='yellow' , bg='blue' , font=('Helvetica' , 25 , 'bold'))
-           label.pack(padx=10 , pady=2)
-           label = tk.Label(self , text=f'ASTRO Bill : RM{row[5].value}' , fg='yellow' , bg='blue' , font=('Helvetica' , 25 , 'bold'))
-           label.pack(padx=10 , pady=2)
-           back = tk.Button(self , text='Return' , font=('Helvetica' , 20) , fg='black' , bg='yellow' , width=10 , command=lambda:controller.show_frame('welcomepage'))
-           back.pack(padx=10 , pady=10)
-           finish = tk.Button(self , text='Finish' , fg='black' , bg='yellow' , font=('Helvetica' , 20) , width=10 , command=lambda:controller.show_frame('farewell'))
-           finish.pack(padx=10 , pady=20)
+
+           button = tk.Button(self , text='Show Statement' , fg='black' , bg='yellow' , font=('Helvetica' , 25) , command=lambda:statement())
+           button.pack()
+
+
+           def statement():
+            label = tk.Label(self , text='Below are your current statement:' , fg='yellow' , bg='blue' , font=('Helvetica' , 25))
+            label.pack(padx=10 , pady=10)
+            label = tk.Label(self , text=f'Account Name : {row[0].value}' , fg='yellow' , bg='blue' , font=('Helvetica' , 25 , 'bold') , justify='left' , anchor='w')
+            label.pack(padx=10 , pady=2)
+            label = tk.Label(self , text=f' Balance : RM{row[2].value}' , fg='yellow' , bg='blue' , font=('Helvetica' , 25 , 'bold') , justify='left' , anchor='w')
+            label.pack(padx=10 , pady=2)
+            label = tk.Label(self , text=f' TNB Bill : RM{row[3].value}' , fg='yellow' , bg='blue' , font=('Helvetica' , 25 , 'bold'))
+            label.pack(padx=10 , pady=2)
+            label = tk.Label(self , text=f' Water Bill : RM{row[4].value}' , fg='yellow' , bg='blue' , font=('Helvetica' , 25 , 'bold'))
+            label.pack(padx=10 , pady=2)
+            label = tk.Label(self , text=f'ASTRO Bill : RM{row[5].value}' , fg='yellow' , bg='blue' , font=('Helvetica' , 25 , 'bold'))
+            label.pack(padx=10 , pady=2)
+            back = tk.Button(self , text='Return' , font=('Helvetica' , 20) , fg='black' , bg='yellow' , width=10 , command=lambda:controller.show_frame('welcomepage'))
+            back.pack(padx=10 , pady=10)
+            finish = tk.Button(self , text='Finish' , fg='black' , bg='yellow' , font=('Helvetica' , 20) , width=10 , command=lambda:controller.show_frame('farewell'))
+            finish.pack(padx=10 , pady=20)
+            button.forget()
+            
            
 
 
-class cashIn(tk.Frame):
+ class cashIn(tk.Frame):
     def __init__(self, parent , controller):
         wb = openpyxl.load_workbook('raziq.xlsx')
         sheet = wb.active
@@ -183,9 +195,24 @@ class cashIn(tk.Frame):
 
                            new_money =  float(entry2.get()) + float(row[2].value)
                            row[2].value = new_money
-                           label = tk.Button(self , text=f'Next' , fg='yellow' , command=lambda:controller.show_frame('newDeposit'))
-                           label.pack()
+                           nextup = tk.Button(self , text=f'Next' , command=lambda:newDepo() , bg='yellow' , fg='black' , font=('Helvetica' , 25))
+                           nextup.pack(padx=10 , pady=10)
                            wb.save('raziq.xlsx')
+
+
+                    def newDepo():
+                           
+                           rusure['text'] = f' Your new balance is {row[2].value}'
+                           entry2.forget()
+                           button2.forget()
+                           button3.forget()
+                           comeback = tk.Button(self , text='Return' , bg='yellow' , fg='black' , font=('Helvetica' , 25) , command=lambda:controller.show_frame('welcomepage') )
+                           comeback.pack()
+                          
+                           
+
+                           
+                           
 
                     wb.save('raziq.xlsx')
 
@@ -214,7 +241,7 @@ class cashIn(tk.Frame):
 
 
 
-class newDeposit(tk.Frame):
+ class newDeposit(tk.Frame):
     def __init__(self, parent , controller):
         wb = openpyxl.load_workbook('raziq.xlsx')
         sheet = wb.active
@@ -252,7 +279,7 @@ class newDeposit(tk.Frame):
 
            
 
-class farewell(tk.Frame):
+ class farewell(tk.Frame):
     def __init__(self ,parent , controller):
            tk.Frame.__init__(self , parent)
            self.controller= controller
@@ -295,7 +322,7 @@ class farewell(tk.Frame):
 
 
 
-if __name__ == "__main__":
-    app = GUI()
-    app.geometry('700x500')
-    app.mainloop()
+ if __name__ == "__main__":
+      app = GUI()
+      app.geometry('700x500')
+      app.mainloop()
