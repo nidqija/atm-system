@@ -6,10 +6,7 @@ sheet = wb.active
 
 
 class GUI(tk.Tk):
-    wb = openpyxl.load_workbook('raziq.xlsx')
-    sheet = wb.active
 
-    for row in sheet.rows:
 
       def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)   
@@ -21,7 +18,7 @@ class GUI(tk.Tk):
         
 
         self.frames = {}
-        for F in (loginpage , welcomepage , deposit , view , cashIn , newDeposit , farewell):
+        for F in (loginpage , welcomepage , deposit , view , cashIn , newDeposit , withdraw ,  farewell):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -88,7 +85,7 @@ for row in sheet.rows:
           title.pack(padx= 20 , pady= 30)
           button1 = tk.Button(self , text= 'Deposit' , fg='black' , bg='yellow' , height=1 , width=20 , font=('Helvetica' , 25 ) , command=lambda:controller.show_frame('deposit'))
           button1.pack(padx=20 , pady=10)
-          button1 = tk.Button(self , text= 'Withdraw' , fg='black' , bg='yellow' , height=1 , width=20 , font=('Helvetica' , 25 ))
+          button1 = tk.Button(self , text= 'Withdraw' , fg='black' , bg='yellow' , height=1 , width=20 , font=('Helvetica' , 25 ) , command=lambda:controller.show_frame('withdraw'))
           button1.pack(padx=20 , pady=10)
           button1 = tk.Button(self , text= 'Bills' , fg='black' , bg='yellow' , height=1 , width=20 , font=('Helvetica' , 25 ))
           button1.pack(padx=20 , pady=10)
@@ -235,6 +232,31 @@ for row in sheet.rows:
 
 
         wb.save('raziq.xlsx')
+
+
+
+ class withdraw(tk.Frame):
+     def __init__(self, parent , controller):
+        wb = openpyxl.load_workbook('raziq.xlsx')
+        sheet = wb.active
+
+        for row in sheet.rows:
+         
+            tk.Frame.__init__(self ,parent)
+            self.controller = controller
+            self.configure(bg='blue')  
+            current_depo = tk.Label(self , text=f'Your current balance : RM {row[2].value}' , fg='yellow' , bg='blue' , font=('Helvetica' , 25 , 'bold'))
+            current_depo.pack(padx=10 , pady= 40)
+            rusure = tk.Label(self , text='Enter Amount:' , fg='yellow' , bg='blue' , font=('Helvetica' , 20 , 'bold'))
+            rusure.pack(pady=10 , padx=40)
+            entry_deposit = tk.IntVar()
+            entry2 = tk.Entry(self , font=('Helvetica' , 35 ) , textvariable=entry_deposit)
+            entry2.pack(padx=10 , pady=20)
+            button = tk.Button(self , text='Submit' , fg='black' , bg='yellow' , font=('Helvetica' , 25) ,)
+            button.pack()
+            invalid = tk.Label(self , text='' , fg='yellow' , bg='blue' , font=('Helvetica' , 25))
+            invalid.pack(padx=10 , pady=10)
+
 
 
 
