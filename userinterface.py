@@ -6,8 +6,12 @@ sheet = wb.active
 
 
 class GUI(tk.Tk):
+    wb = openpyxl.load_workbook('raziq.xlsx')
+    sheet = wb.active
 
-    def __init__(self, *args, **kwargs):
+    for row in sheet.rows:
+
+      def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)   
 
         container = tk.Frame(self)
@@ -27,9 +31,10 @@ class GUI(tk.Tk):
 
         self.show_frame("loginpage")
 
-    def show_frame(self, page_name):
+      def show_frame(self, page_name):
         frame = self.frames[page_name]
         frame.tkraise()
+
 
 for row in sheet.rows:
 
@@ -206,7 +211,7 @@ for row in sheet.rows:
                            entry2.forget()
                            button2.forget()
                            button3.forget()
-                           comeback = tk.Button(self , text='Return' , bg='yellow' , fg='black' , font=('Helvetica' , 25) , command=lambda:controller.show_frame('welcomepage') )
+                           comeback = tk.Button(self , text='Return' , bg='yellow' , fg='black' , font=('Helvetica' , 25) , command=lambda:app.destroy() )
                            comeback.pack()
                           
                            
