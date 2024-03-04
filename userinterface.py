@@ -68,7 +68,7 @@ for row in sheet.rows:
 
 
       
-
+for row in sheet.rows:
 
 
  class welcomepage(tk.Frame):  
@@ -93,6 +93,8 @@ for row in sheet.rows:
           button1.pack(padx=20 , pady=10)
 
 
+for row in sheet.rows:
+
  class deposit(tk.Frame):
     def __init__(self , parent , controller):
         wb = openpyxl.load_workbook('raziq.xlsx')
@@ -116,6 +118,7 @@ for row in sheet.rows:
 
 
         
+for row in sheet.rows:
 
 
  class view(tk.Frame):
@@ -130,30 +133,27 @@ for row in sheet.rows:
            self.controller = controller
            self.configure(bg='blue')
 
-           button = tk.Button(self , text='Show Statement' , fg='black' , bg='yellow' , font=('Helvetica' , 25) , command=lambda:statement())
-           button.pack()
-
-
-           def statement():
-            label = tk.Label(self , text='Below are your current statement:' , fg='yellow' , bg='blue' , font=('Helvetica' , 25))
-            label.pack(padx=10 , pady=10)
-            label = tk.Label(self , text=f'Account Name : {row[0].value}' , fg='yellow' , bg='blue' , font=('Helvetica' , 25 , 'bold') , justify='left' , anchor='w')
-            label.pack(padx=10 , pady=2)
-            label = tk.Label(self , text=f' Balance : RM{row[2].value}' , fg='yellow' , bg='blue' , font=('Helvetica' , 25 , 'bold') , justify='left' , anchor='w')
-            label.pack(padx=10 , pady=2)
-            label = tk.Label(self , text=f' TNB Bill : RM{row[3].value}' , fg='yellow' , bg='blue' , font=('Helvetica' , 25 , 'bold'))
-            label.pack(padx=10 , pady=2)
-            label = tk.Label(self , text=f' Water Bill : RM{row[4].value}' , fg='yellow' , bg='blue' , font=('Helvetica' , 25 , 'bold'))
-            label.pack(padx=10 , pady=2)
-            label = tk.Label(self , text=f'ASTRO Bill : RM{row[5].value}' , fg='yellow' , bg='blue' , font=('Helvetica' , 25 , 'bold'))
-            label.pack(padx=10 , pady=2)
-            back = tk.Button(self , text='Return' , font=('Helvetica' , 20) , fg='black' , bg='yellow' , width=10 , command=lambda:controller.show_frame('welcomepage'))
-            back.pack(padx=10 , pady=10)
-            finish = tk.Button(self , text='Finish' , fg='black' , bg='yellow' , font=('Helvetica' , 20) , width=10 , command=lambda:controller.show_frame('farewell'))
-            finish.pack(padx=10 , pady=20)
-            button.forget()
+           
+           label = tk.Label(self , text='Below are your current statement:' , fg='yellow' , bg='blue' , font=('Helvetica' , 25))
+           label.pack(padx=10 , pady=10)
+           label = tk.Label(self , text=f'Account Name : {row[0].value}' , fg='yellow' , bg='blue' , font=('Helvetica' , 25 , 'bold') , justify='left' , anchor='w')
+           label.pack(padx=10 , pady=2)
+           label = tk.Label(self , text=f' Balance : RM{row[2].value}' , fg='yellow' , bg='blue' , font=('Helvetica' , 25 , 'bold') , justify='left' , anchor='w')
+           label.pack(padx=10 , pady=2)
+           label = tk.Label(self , text=f' TNB Bill : RM{row[3].value}' , fg='yellow' , bg='blue' , font=('Helvetica' , 25 , 'bold'))
+           label.pack(padx=10 , pady=2)
+           label = tk.Label(self , text=f' Water Bill : RM{row[4].value}' , fg='yellow' , bg='blue' , font=('Helvetica' , 25 , 'bold'))
+           label.pack(padx=10 , pady=2)
+           label = tk.Label(self , text=f'ASTRO Bill : RM{row[5].value}' , fg='yellow' , bg='blue' , font=('Helvetica' , 25 , 'bold'))
+           label.pack(padx=10 , pady=2)
+           back = tk.Button(self , text='Return' , font=('Helvetica' , 20) , fg='black' , bg='yellow' , width=10 , command=lambda:controller.show_frame('welcomepage'))
+           back.pack(padx=10 , pady=10)
+           finish = tk.Button(self , text='Finish' , fg='black' , bg='yellow' , font=('Helvetica' , 20) , width=10 , command=lambda:controller.show_frame('farewell'))
+           finish.pack(padx=10 , pady=20)
+            
             
            
+for row in sheet.rows:
 
 
  class cashIn(tk.Frame):
@@ -234,6 +234,8 @@ for row in sheet.rows:
         wb.save('raziq.xlsx')
 
 
+for row in sheet.rows:
+
 
  class withdraw(tk.Frame):
      def __init__(self, parent , controller):
@@ -254,8 +256,11 @@ for row in sheet.rows:
             entry2.pack(padx=10 , pady=20)
             button = tk.Button(self , text='Submit' , fg='black' , bg='yellow' , font=('Helvetica' , 25) ,)
             button.pack()
+            goback = tk.Button( self , text='Return' , fg='black' , bg='yellow' , font=('Helvetica' , 25) , command=lambda:controller.show_frame('welcomepage'))
+            goback.pack(padx=10 , pady=20)
             invalid = tk.Label(self , text='' , fg='yellow' , bg='blue' , font=('Helvetica' , 25))
             invalid.pack(padx=10 , pady=10)
+
 
 
 
@@ -266,7 +271,7 @@ for row in sheet.rows:
                     
                             
 
-                        
+for row in sheet.rows:                      
 
 
 
@@ -304,7 +309,8 @@ for row in sheet.rows:
                
 
                     
-                   
+for row in sheet.rows:
+                  
 
            
 
