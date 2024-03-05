@@ -186,6 +186,7 @@ for row in sheet.rows:
                     button3 = tk.Button( self , text='No' , bg='yellow' , fg='black' , font=('Helvetica' , 25) , width=20 , command=lambda:no())
                     button3.pack()
                     button.forget()
+
                     def no():
                             rusure['text'] = 'Enter Amount :'
                             button2.forget()
@@ -197,20 +198,16 @@ for row in sheet.rows:
 
                            new_money =  float(entry2.get()) + float(row[2].value)
                            row[2].value = new_money
-                           nextup = tk.Button(self , text=f'Next' , command=lambda:newDepo() , bg='yellow' , fg='black' , font=('Helvetica' , 25))
-                           nextup.pack(padx=10 , pady=10)
-                           wb.save('raziq.xlsx')
-
-
-                    def newDepo():
-                           
-                           rusure['text'] = f' Your new balance is {row[2].value}'
+                           rusure['text'] = f' Your new balance  {row[2].value}'
                            entry2.forget()
                            button2.forget()
                            button3.forget()
                            comeback = tk.Button(self , text='Return' , bg='yellow' , fg='black' , font=('Helvetica' , 25) , command=lambda:app.destroy() )
                            comeback.pack()
-                          
+                           wb.save('raziq.xlsx')
+
+
+                         
 
                           
                            
@@ -249,17 +246,55 @@ for row in sheet.rows:
             self.configure(bg='blue')  
             current_depo = tk.Label(self , text=f'Your current balance : RM {row[2].value}' , fg='yellow' , bg='blue' , font=('Helvetica' , 25 , 'bold'))
             current_depo.pack(padx=10 , pady= 40)
-            rusure = tk.Label(self , text='Enter Amount:' , fg='yellow' , bg='blue' , font=('Helvetica' , 20 , 'bold'))
-            rusure.pack(pady=10 , padx=40)
+            amount = tk.Label(self , text='Enter Amount:' , fg='yellow' , bg='blue' , font=('Helvetica' , 20 , 'bold'))
+            amount.pack(pady=10 , padx=40)
             entry_deposit = tk.IntVar()
             entry2 = tk.Entry(self , font=('Helvetica' , 35 ) , textvariable=entry_deposit)
             entry2.pack(padx=10 , pady=20)
-            button = tk.Button(self , text='Submit' , fg='black' , bg='yellow' , font=('Helvetica' , 25) ,)
+            button = tk.Button(self , text='Submit' , fg='black' , bg='yellow' , font=('Helvetica' , 25) , command=lambda:checkAmount())
             button.pack()
             goback = tk.Button( self , text='Return' , fg='black' , bg='yellow' , font=('Helvetica' , 25) , command=lambda:controller.show_frame('welcomepage'))
             goback.pack(padx=10 , pady=20)
             invalid = tk.Label(self , text='' , fg='yellow' , bg='blue' , font=('Helvetica' , 25))
             invalid.pack(padx=10 , pady=10)
+
+
+            def checkAmount():
+
+               try:
+                  float(entry2.get())
+                  current_depo['text'] = 'Are you sure?'
+                  agree = tk.Button(self , text='Yes' , fg='black' , bg='yellow' , font=('Helvetica' , 25) , command=lambda:substract())
+                  agree.pack()
+                  button.forget()
+                  goback.forget()
+
+
+                  def substract():
+                      new_money =  float(row[2].value) - float(entry2.get())
+                      row[2].value = new_money
+                      current_depo['text'] = f'Thank you!'
+                      amount['text'] = f'Your current balance is : RM {row[2].value}'
+                      comeback = tk.Button(self , text='Return' , bg='yellow' , fg='black' , font=('Helvetica' , 25) , command=lambda:app.destroy() )
+                      comeback.pack()
+                      agree.forget()
+                      wb.save('raziq.xlsx')
+
+
+                  
+                     
+
+
+
+
+
+
+               except ValueError:
+                  invalid['text'] = 'invalid input'
+                  
+
+
+
 
 
 
