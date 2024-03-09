@@ -1,5 +1,6 @@
 import tkinter as tk
 import openpyxl
+import os
 
 wb = openpyxl.load_workbook('raziq.xlsx')
 sheet = wb.active
@@ -18,7 +19,7 @@ class GUI(tk.Tk):
         
 
         self.frames = {}
-        for F in (loginpage , welcomepage , deposit , view , cashIn , newDeposit , withdraw ,  farewell):
+        for F in (loginpage , welcomepage , deposit , view , cashIn , newDeposit , withdraw , bill , farewell):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -33,9 +34,9 @@ class GUI(tk.Tk):
         frame.tkraise()
 
 
-for row in sheet.rows:
 
- class loginpage(tk.Frame):
+
+class loginpage(tk.Frame):
     
     def __init__(self, parent , controller):
 
@@ -68,10 +69,10 @@ for row in sheet.rows:
 
 
       
-for row in sheet.rows:
 
 
- class welcomepage(tk.Frame):  
+
+class welcomepage(tk.Frame):  
          
      def __init__(self, parent , controller):
         wb = openpyxl.load_workbook('raziq.xlsx')
@@ -87,15 +88,15 @@ for row in sheet.rows:
           button1.pack(padx=20 , pady=10)
           button1 = tk.Button(self , text= 'Withdraw' , fg='black' , bg='yellow' , height=1 , width=20 , font=('Helvetica' , 25 ) , command=lambda:controller.show_frame('withdraw'))
           button1.pack(padx=20 , pady=10)
-          button1 = tk.Button(self , text= 'Bills' , fg='black' , bg='yellow' , height=1 , width=20 , font=('Helvetica' , 25 ))
+          button1 = tk.Button(self , text= 'Bills' , fg='black' , bg='yellow' , height=1 , width=20 , font=('Helvetica' , 25 ) , command=lambda:controller.show_frame('bill'))
           button1.pack(padx=20 , pady=10)
           button1 = tk.Button(self , text= 'View Account' , fg='black' , bg='yellow' , height=1 , width=20 , font=('Helvetica' , 25 ) , command=lambda:controller.show_frame('view'))
           button1.pack(padx=20 , pady=10)
 
 
-for row in sheet.rows:
 
- class deposit(tk.Frame):
+
+class deposit(tk.Frame):
     def __init__(self , parent , controller):
         wb = openpyxl.load_workbook('raziq.xlsx')
         sheet = wb.active
@@ -118,10 +119,10 @@ for row in sheet.rows:
 
 
         
-for row in sheet.rows:
 
 
- class view(tk.Frame):
+
+class view(tk.Frame):
     def __init__(self, parent , controller ):
         wb = openpyxl.load_workbook('raziq.xlsx')
         sheet = wb.active
@@ -153,10 +154,10 @@ for row in sheet.rows:
             
             
            
-for row in sheet.rows:
 
 
- class cashIn(tk.Frame):
+
+class cashIn(tk.Frame):
     def __init__(self, parent , controller):
         wb = openpyxl.load_workbook('raziq.xlsx')
         sheet = wb.active
@@ -202,27 +203,15 @@ for row in sheet.rows:
                            entry2.forget()
                            button2.forget()
                            button3.forget()
-                           comeback = tk.Button(self , text='Return' , bg='yellow' , fg='black' , font=('Helvetica' , 25) , command=lambda:app.destroy() )
+                           comeback = tk.Button(self , text='Return' , bg='yellow' , fg='black' , font=('Helvetica' , 25) , command=lambda:restart() )
                            comeback.pack()
                            wb.save('raziq.xlsx')
 
-
-                         
-
-                          
-                           
-
-                           
-                           
-
+                    def restart():
+                       app.destroy()
+                       os.startfile('ui.pyw')
+              
                     wb.save('raziq.xlsx')
-
-
-
-                     
-               
-                    
-
 
               except ValueError:
                     invalid['text'] = 'Invalid Input'
@@ -231,10 +220,10 @@ for row in sheet.rows:
         wb.save('raziq.xlsx')
 
 
-for row in sheet.rows:
 
 
- class withdraw(tk.Frame):
+
+class withdraw(tk.Frame):
      def __init__(self, parent , controller):
         wb = openpyxl.load_workbook('raziq.xlsx')
         sheet = wb.active
@@ -275,10 +264,16 @@ for row in sheet.rows:
                       row[2].value = new_money
                       current_depo['text'] = f'Thank you!'
                       amount['text'] = f'Your current balance is : RM {row[2].value}'
-                      comeback = tk.Button(self , text='Return' , bg='yellow' , fg='black' , font=('Helvetica' , 25) , command=lambda:app.destroy() )
+                      comeback = tk.Button(self , text='Return' , bg='yellow' , fg='black' , font=('Helvetica' , 25) , command=lambda:restart() )
                       comeback.pack()
+                      entry2.forget()
                       agree.forget()
                       wb.save('raziq.xlsx')
+
+
+                  def restart():
+                      app.destroy()
+                      os.startfile('ui.pyw')
 
 
                   
@@ -292,25 +287,11 @@ for row in sheet.rows:
                except ValueError:
                   invalid['text'] = 'invalid input'
                   
+                  
 
 
 
-
-
-
-
-
-
-           
-                     
-                    
-                            
-
-for row in sheet.rows:                      
-
-
-
- class newDeposit(tk.Frame):
+class newDeposit(tk.Frame):
     def __init__(self, parent , controller):
         wb = openpyxl.load_workbook('raziq.xlsx')
         sheet = wb.active
@@ -334,22 +315,22 @@ for row in sheet.rows:
 
 
 
-          
 
+class bill(tk.Frame):
+    def __init__(self, parent , controller):
+        tk.Frame.__init__(self , parent)
+        self.controller = controller
+        self.configure(bg='blue')
+        title = tk.Label(self , text='Here are your bills :' , fg='yellow' , font=('Helvetica' , 35  , 'bold') , bg='blue')
+        title.pack(padx=10 , pady=30)
+        bill1 = tk.Button(self , text='TNB bill' , bg='blue' , font=('Helvetica' , 25  , 'bold') , fg='yellow' , width=30 )
+        bill1.pack(padx=10 , pady=10)
+        bill2 = tk.Button(self , text='Water bill' , bg='blue' , font=('Helvetica' , 25  , 'bold') , fg='yellow' , width=30)
+        bill2.pack(padx=10 , pady=10)
+        bill3 = tk.Button(self , text='ASTRO bill' , bg='blue' , font=('Helvetica' , 25  , 'bold') , fg='yellow' , width=30)
+        bill3.pack(padx=10 , pady=10)   
 
-  
-
-       
-
-               
-
-                    
-for row in sheet.rows:
-                  
-
-           
-
- class farewell(tk.Frame):
+class farewell(tk.Frame):
     def __init__(self ,parent , controller):
            tk.Frame.__init__(self , parent)
            self.controller= controller
@@ -392,7 +373,7 @@ for row in sheet.rows:
 
 
 
- if __name__ == "__main__":
+if __name__ == "__main__":
       app = GUI()
       app.geometry('700x500')
       app.mainloop()
