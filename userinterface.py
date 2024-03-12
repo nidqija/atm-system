@@ -299,7 +299,7 @@ class withdraw(tk.Frame):
                   
                   
 
-#========================newdepo ( withdraw)======================#
+#========================newdepo (withdraw)======================#
 
 
 
@@ -366,12 +366,32 @@ class bill1(tk.Frame):
            bill1.pack(padx=10 , pady=10)
            price = tk.Label(self , text=f'RM {row[3].value}' , font=('Helvetica' , 40  , 'bold') , fg='yellow' , bg='blue' )
            price.pack(padx=10 , pady=20)
-           entry3 = tk.Entry(self , width=25 , font=('Helvetica' , 30))
+           bill1_deposit = tk.IntVar()
+           entry3 = tk.Entry(self , textvariable= bill1_deposit , width=25 , font=('Helvetica' , 30))
            entry3.pack()
-           pay = tk.Button(self , text='Pay' , width=10 , fg='black' , bg='yellow' , font=('Helvetica' , 25))
+           error = tk.Label(self , text='' , fg='yellow' , bg='blue' ,  font=('Helvetica' , 25) )
+           error.pack()
+           pay = tk.Button(self , text='Pay' , width=10 , fg='black' , bg='yellow' , font=('Helvetica' , 25) , command=lambda:deducbill1())
            pay.pack(pady=20 , padx=10)
            comeback = tk.Button(self , text='Return' , width=10 , fg='black' , bg='yellow' , font=('Helvetica' , 25) , command=lambda:controller.show_frame('bill'))
            comeback.pack(pady=20 , padx=10)
+
+           def deducbill1():
+               try:
+                float(entry3.get())
+                price.forget()
+                bill1['text'] = 'Are you sure?'
+                
+
+
+
+               except ValueError:
+                   error['text'] = 'Invalid input!'
+                   
+
+
+
+
 
 
 
@@ -420,7 +440,7 @@ class farewell(tk.Frame):
            
 
 
-           
+        
         
 
            
