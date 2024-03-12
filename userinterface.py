@@ -19,7 +19,7 @@ class GUI(tk.Tk):
         
 
         self.frames = {}
-        for F in (loginpage , welcomepage , deposit , view , cashIn , newDeposit , withdraw , bill , farewell):
+        for F in (loginpage , welcomepage , deposit , view , cashIn , newDeposit , withdraw , bill , bill1 , bill2 , farewell):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -34,42 +34,45 @@ class GUI(tk.Tk):
         frame.tkraise()
 
 
-
+#======login=======#
 
 class loginpage(tk.Frame):
     
     def __init__(self, parent , controller):
+        wb = openpyxl.load_workbook('raziq.xlsx')
+        sheet = wb.active
 
-        
-        tk.Frame.__init__(self , parent)
-        self.controller = controller
-        self.configure(background='blue')
-        title = tk.Label(self , text='Welcome to XYZ Bank!' , font=('Helvetica' , 35 , 'bold' ,) , bg='blue' , fg='yellow')
-        title.pack(padx= 20 , pady= 30)
+        for row in sheet.rows:
+     
+            tk.Frame.__init__(self , parent)
+            self.controller = controller
+            self.configure(background='blue')
+            title = tk.Label(self , text='Welcome to XYZ Bank!' , font=('Helvetica' , 35 , 'bold' ,) , bg='blue' , fg='yellow')
+            title.pack(padx= 20 , pady= 30)
 
-        my_passkey = tk.IntVar()
+            my_passkey = tk.IntVar()
 
-        label = tk.Entry(self , text = 'Enter Account Number:' , textvariable=my_passkey , font=('Helvetica' , 25) , bg='white' )
-        label.pack()
+            label = tk.Entry(self , text = 'Enter Account Number:' , textvariable=my_passkey , font=('Helvetica' , 25) , bg='white' )
+            label.pack()
        
-        button = tk.Button(self , text = 'Submit' , font=('Helvetica' , 20) ,height=1 , width= 30 , bg='yellow' ,command=lambda:check_password())
-        button.pack(padx = 10 , pady= 20)
+            button = tk.Button(self , text = 'Submit' , font=('Helvetica' , 20) ,height=1 , width= 30 , bg='yellow' ,command=lambda:check_password())
+            button.pack(padx = 10 , pady= 20)
 
-        incorrect_pass_label = tk.Label(self , text="" , fg="white" , bg='blue' , font=('Helvetica' , 17))
-        incorrect_pass_label.pack(fill='both' , expand=True , padx=10 , pady=20)
+            incorrect_pass_label = tk.Label(self , text="" , fg="white" , bg='blue' , font=('Helvetica' , 17))
+            incorrect_pass_label.pack(fill='both' , expand=True , padx=10 , pady=20)
 
-        def check_password():
-           wb = openpyxl.load_workbook('raziq.xlsx')
-           sheet = wb.active
-           for row in sheet.rows:
-              if my_passkey.get() == row[1].value:
-                   controller.show_frame('welcomepage')
-              else:
-                  incorrect_pass_label['text'] = 'Incorrect Password'
+            def check_password():
+           
+                if my_passkey.get() == row[1].value:
+                     controller.show_frame('welcomepage')
+
+
+                else:
+                     incorrect_pass_label['text'] = 'Incorrect Password'
 
 
       
-
+#===========welcome page==============#
 
 
 class welcomepage(tk.Frame):  
@@ -96,6 +99,9 @@ class welcomepage(tk.Frame):
 
 
 
+#====================deposit=======================#
+
+
 class deposit(tk.Frame):
     def __init__(self , parent , controller):
         wb = openpyxl.load_workbook('raziq.xlsx')
@@ -118,7 +124,7 @@ class deposit(tk.Frame):
 
 
 
-        
+#================view statement=================#       
 
 
 
@@ -154,7 +160,7 @@ class view(tk.Frame):
             
             
            
-
+#=============== cash in(deposit)======================#
 
 
 class cashIn(tk.Frame):
@@ -223,6 +229,10 @@ class cashIn(tk.Frame):
 
 
 
+
+#--------withdraw----------------------------#
+
+
 class withdraw(tk.Frame):
      def __init__(self, parent , controller):
         wb = openpyxl.load_workbook('raziq.xlsx')
@@ -289,6 +299,8 @@ class withdraw(tk.Frame):
                   
                   
 
+#========================newdepo ( withdraw)======================#
+
 
 
 class newDeposit(tk.Frame):
@@ -316,6 +328,9 @@ class newDeposit(tk.Frame):
 
 
 
+
+#=============================bill======================================#
+
 class bill(tk.Frame):
     def __init__(self, parent , controller):
         tk.Frame.__init__(self , parent)
@@ -323,12 +338,69 @@ class bill(tk.Frame):
         self.configure(bg='blue')
         title = tk.Label(self , text='Here are your bills :' , fg='yellow' , font=('Helvetica' , 35  , 'bold') , bg='blue')
         title.pack(padx=10 , pady=30)
-        bill1 = tk.Button(self , text='TNB bill' , bg='blue' , font=('Helvetica' , 25  , 'bold') , fg='yellow' , width=30 )
+        bill1 = tk.Button(self , text='TNB bill' , bg='blue' , font=('Helvetica' , 25  , 'bold') , fg='yellow' , width=30 , command=lambda:controller.show_frame('bill1'))
         bill1.pack(padx=10 , pady=10)
-        bill2 = tk.Button(self , text='Water bill' , bg='blue' , font=('Helvetica' , 25  , 'bold') , fg='yellow' , width=30)
+        bill2 = tk.Button(self , text='Water bill' , bg='blue' , font=('Helvetica' , 25  , 'bold') , fg='yellow' , width=30 , command=lambda:controller.show_frame('bill2'))
         bill2.pack(padx=10 , pady=10)
-        bill3 = tk.Button(self , text='ASTRO bill' , bg='blue' , font=('Helvetica' , 25  , 'bold') , fg='yellow' , width=30)
-        bill3.pack(padx=10 , pady=10)   
+        bill3 = tk.Button(self , text='ASTRO bill' , bg='blue' , font=('Helvetica' , 25  , 'bold') , fg='yellow' , width=30 )
+        bill3.pack(padx=10 , pady=10)  
+        comeback = tk.Button(self , text='Return' , bg='yellow' , fg='black' , font=('Helvetica' , 25) , command=lambda:controller.show_frame('welcomepage'))
+        comeback.pack(padx=10 , pady=10) 
+
+
+
+
+
+#===============================bill 1 ( tnb bill)=====================================#
+
+class bill1(tk.Frame):
+    def __init__(self , parent , controller):
+        wb = openpyxl.load_workbook('raziq.xlsx')
+        sheet = wb.active
+
+        for row in sheet.rows:
+           tk.Frame.__init__(self ,parent)
+           self.controller = controller
+           self.configure(bg='blue')
+           bill1 = tk.Label(self , text='Your TNB bill is :' ,  fg='yellow' , font=('Helvetica' , 35  , 'bold') , bg='blue')
+           bill1.pack(padx=10 , pady=10)
+           price = tk.Label(self , text=f'RM {row[3].value}' , font=('Helvetica' , 40  , 'bold') , fg='yellow' , bg='blue' )
+           price.pack(padx=10 , pady=20)
+           entry3 = tk.Entry(self , width=25 , font=('Helvetica' , 30))
+           entry3.pack()
+           pay = tk.Button(self , text='Pay' , width=10 , fg='black' , bg='yellow' , font=('Helvetica' , 25))
+           pay.pack(pady=20 , padx=10)
+           comeback = tk.Button(self , text='Return' , width=10 , fg='black' , bg='yellow' , font=('Helvetica' , 25) , command=lambda:controller.show_frame('bill'))
+           comeback.pack(pady=20 , padx=10)
+
+
+
+
+#===============================bill 2 ( water bill)===========================#
+           
+class bill2(tk.Frame):
+    def __init__(self, parent , controller):
+        wb = openpyxl.load_workbook('raziq.xlsx')
+        sheet = wb.active
+
+        for row in sheet.rows:
+           tk.Frame.__init__(self , parent)
+           self.controller = controller
+           self.configure(bg='blue')
+           bill2 = tk.Label(self , text='Your Water bill is :' ,  fg='yellow' , font=('Helvetica' , 35  , 'bold') , bg='blue' )
+           bill2.pack()
+           price = tk.Label(self , text=f'RM {row[4].value}' , font=('Helvetica' , 40  , 'bold') , fg='yellow' , bg='blue' )
+           price.pack(padx=10 , pady=20)
+           entry3 = tk.Entry(self , width=25 , font=('Helvetica' , 30))
+           entry3.pack()
+           pay = tk.Button(self , text='Pay' , width=10 , fg='black' , bg='yellow' , font=('Helvetica' , 25))
+           pay.pack(pady=20 , padx=10)
+           comeback = tk.Button(self , text='Return' , width=10 , fg='black' , bg='yellow' , font=('Helvetica' , 25) , command=lambda:controller.show_frame('bill'))
+           comeback.pack(pady=20 , padx=10)
+
+
+#================================end program==========================================#
+    
 
 class farewell(tk.Frame):
     def __init__(self ,parent , controller):
