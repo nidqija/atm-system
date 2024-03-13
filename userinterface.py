@@ -381,12 +381,26 @@ class bill1(tk.Frame):
                 float(entry3.get())
                 price.forget()
                 bill1['text'] = 'Are you sure?'
+                pay.forget()
+                comeback.forget()
+                agree = tk.Button(self , text='yes' , fg='black' , bg='yellow' , font=('Helvetica' , 25) , width=20 , command=lambda:deduc2()  )
+                agree.pack(padx=10 , pady=20)
+                stepback = tk.Button(self , text='no' ,  fg='black' , bg='yellow' , font=('Helvetica' , 25) , width=20)
+                stepback.pack()
                 
 
 
 
                except ValueError:
                    error['text'] = 'Invalid input!'
+
+
+
+
+               def deduc2():
+                      pass
+                   
+                   
                    
 
 
