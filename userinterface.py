@@ -398,7 +398,23 @@ class bill1(tk.Frame):
 
 
                def deduc2():
-                      pass
+                      minus = float(row[3].value) - float(entry3.get())
+                      row[3].value = minus
+                      bill1['text'] = 'Thank You!'
+                      price2 = tk.Label(self , text=f'Your current balance is RM {row[3].value}' , bg='blue' , fg='yellow' , font=('Helvetica' , 30 , 'bold') ) 
+                      price2.pack(padx=10 , pady=20)
+                      entry3.forget()
+                      agree.forget()
+                      stepback.forget()
+                      comeback = tk.Button(self , text='Return' , bg='yellow' , fg='black' , font=('Helvetica' , 25) , command=lambda:restart() )
+                      comeback.pack(padx=10  ,pady=10)
+                      wb.save('raziq.xlsx')
+
+
+               def restart():
+                    app.destroy()
+                    os.startfile('ui.pyw')
+
                    
                    
                    
