@@ -265,8 +265,17 @@ class withdraw(tk.Frame):
                   current_depo['text'] = 'Are you sure?'
                   agree = tk.Button(self , text='Yes' , fg='black' , bg='yellow' , font=('Helvetica' , 25) , command=lambda:substract())
                   agree.pack()
+                  disagree = tk.Button(self , text='No' , fg='black' , bg='yellow' , font=('Helvetica' , 25) , command=lambda:no())
+                  disagree.pack()
                   button.forget()
                   goback.forget()
+
+                  def no():
+                      current_depo['text'] = 'Enter your amount:'
+                      agree.forget()
+                      disagree.forget()
+                      button.pack()
+                      amount.forget()
 
 
                   def substract():
@@ -389,7 +398,7 @@ class bill1(tk.Frame):
                       comeback.forget()
                       agree = tk.Button(self , text='yes' , fg='black' , bg='yellow' , font=('Helvetica' , 25) , width=20 , command=lambda:deduc2()  )
                       agree.pack(padx=10 , pady=20)
-                      stepback = tk.Button(self , text='no' ,  fg='black' , bg='yellow' , font=('Helvetica' , 25) , width=20)
+                      stepback = tk.Button(self , text='no' ,  fg='black' , bg='yellow' , font=('Helvetica' , 25) , width=20 , command=lambda:no())
                       stepback.pack()
                 
 
@@ -401,18 +410,42 @@ class bill1(tk.Frame):
 
 
 
+                   def no():
+                       bill1['text'] = 'Your TNB bill is :'
+                       price = tk.Label(self , text=f'RM {row[3].value}' , font=('Helvetica' , 40  , 'bold') , fg='yellow' , bg='blue' )
+                       price.pack(padx=10 , pady=20)
+
+
+
+
                    def deduc2():
                         minus = float(row[3].value) - float(entry3.get())
                         row[3].value = minus
-                        bill1['text'] = 'Thank You!'
-                        price2 = tk.Label(self , text=f'Your current balance is RM {row[3].value}' , bg='blue' , fg='yellow' , font=('Helvetica' , 30 , 'bold') ) 
-                        price2.pack(padx=10 , pady=20)
-                        entry3.forget()
-                        agree.forget()
-                        stepback.forget()
-                        comeback = tk.Button(self , text='Return' , bg='yellow' , fg='black' , font=('Helvetica' , 25) , command=lambda:restart() )
-                        comeback.pack(padx=10  ,pady=10)
-                        wb.save('raziq.xlsx')
+
+                        if row[3].value != 0:
+                            bill1['text'] = 'Thank You!'
+                            price2 = tk.Label(self , text=f'Your current balance is RM {row[3].value}' , bg='blue' , fg='yellow' , font=('Helvetica' , 30 , 'bold') ) 
+                            price2.pack(padx=10 , pady=20)
+                            entry3.forget()
+                            agree.forget()
+                            stepback.forget()
+                            comeback = tk.Button(self , text='Return' , bg='yellow' , fg='black' , font=('Helvetica' , 25) , command=lambda:restart() )
+                            comeback.pack(padx=10  ,pady=10)
+                            wb.save('raziq.xlsx')
+
+
+                        else:
+                            congrats = tk.Label(self , text='Congratulations!' ,  bg='blue' , fg='yellow' , font=('Helvetica' , 30 , 'bold'))
+                            congrats.pack()
+                            fully_paid = tk.Label(self , text='Your bill is fully-paid!' , bg='blue' , fg='yellow' , font=('Helvetica' , 30 , 'bold'))
+                            fully_paid.pack()
+                            entry3.forget()
+                            agree.forget()
+                            stepback.forget()
+                            bill1.forget()
+                            comeback = tk.Button(self , text='Return' , bg='yellow' , fg='black' , font=('Helvetica' , 25) , command=lambda:restart() )
+                            comeback.pack(padx=10  ,pady=10)
+                            wb.save('raziq.xlsx')
 
                       
 
