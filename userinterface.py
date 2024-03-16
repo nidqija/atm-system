@@ -411,9 +411,12 @@ class bill1(tk.Frame):
 
 
                    def no():
-                       bill1['text'] = 'Your TNB bill is :'
-                       price = tk.Label(self , text=f'RM {row[3].value}' , font=('Helvetica' , 40  , 'bold') , fg='yellow' , bg='blue' )
-                       price.pack(padx=10 , pady=20)
+                       bill1['text'] = 'Enter your amount:'
+                       pay.pack()
+                       agree.forget()
+                       stepback.forget()
+                       
+                      
 
 
 
@@ -430,15 +433,15 @@ class bill1(tk.Frame):
                             agree.forget()
                             stepback.forget()
                             comeback = tk.Button(self , text='Return' , bg='yellow' , fg='black' , font=('Helvetica' , 25) , command=lambda:restart() )
-                            comeback.pack(padx=10  ,pady=10)
+                            comeback.pack(padx=10  ,pady=20)
                             wb.save('raziq.xlsx')
 
 
                         else:
                             congrats = tk.Label(self , text='Congratulations!' ,  bg='blue' , fg='yellow' , font=('Helvetica' , 30 , 'bold'))
-                            congrats.pack()
+                            congrats.pack(padx=10  ,pady=20)
                             fully_paid = tk.Label(self , text='Your bill is fully-paid!' , bg='blue' , fg='yellow' , font=('Helvetica' , 30 , 'bold'))
-                            fully_paid.pack()
+                            fully_paid.pack(padx=10 , pady=20)
                             entry3.forget()
                             agree.forget()
                             stepback.forget()
