@@ -87,13 +87,15 @@ class welcomepage(tk.Frame):
           self.controller = controller
           title = tk.Label(self , text=f'Hello {row[0].value}', font=('Helvetica' , 35 , 'bold' ,) , bg='blue' , fg='yellow' )
           title.pack(padx= 20 , pady= 30)
-          button1 = tk.Button(self , text= 'Deposit' , fg='black' , bg='yellow' , height=1 , width=20 , font=('Helvetica' , 25 ) , command=lambda:controller.show_frame('deposit'))
+          button1 = tk.Button(self , text= 'Deposit' , fg='black' , bg='yellow' , height=1 , width=20 , font=('Helvetica' , 20 ) , command=lambda:controller.show_frame('deposit'))
           button1.pack(padx=20 , pady=10)
-          button1 = tk.Button(self , text= 'Withdraw' , fg='black' , bg='yellow' , height=1 , width=20 , font=('Helvetica' , 25 ) , command=lambda:controller.show_frame('withdraw'))
+          button1 = tk.Button(self , text= 'Withdraw' , fg='black' , bg='yellow' , height=1 , width=20 , font=('Helvetica' , 20 ) , command=lambda:controller.show_frame('withdraw'))
           button1.pack(padx=20 , pady=10)
-          button1 = tk.Button(self , text= 'Bills' , fg='black' , bg='yellow' , height=1 , width=20 , font=('Helvetica' , 25 ) , command=lambda:controller.show_frame('bill'))
+          button1 = tk.Button(self , text= 'Bills' , fg='black' , bg='yellow' , height=1 , width=20 , font=('Helvetica' , 20 ) , command=lambda:controller.show_frame('bill'))
           button1.pack(padx=20 , pady=10)
-          button1 = tk.Button(self , text= 'View Account' , fg='black' , bg='yellow' , height=1 , width=20 , font=('Helvetica' , 25 ) , command=lambda:controller.show_frame('view'))
+          button1 = tk.Button(self , text= 'View Account' , fg='black' , bg='yellow' , height=1 , width=20 , font=('Helvetica' , 20 ) , command=lambda:controller.show_frame('view'))
+          button1.pack(padx=20 , pady=10)
+          button1 = tk.Button(self , text= 'Exit' , fg='black' , bg='yellow' , height=1 , width=20 , font=('Helvetica' , 20 ) , command=lambda:controller.show_frame('farewell'))
           button1.pack(padx=20 , pady=10)
 
 
@@ -205,7 +207,9 @@ class cashIn(tk.Frame):
 
                            new_money =  float(entry2.get()) + float(row[2].value)
                            row[2].value = new_money
-                           rusure['text'] = f' Your new balance  {row[2].value}'
+                           Thankyou = tk.Label(self , text=f' Your new balance is RM {row[2].value}' ,  fg='yellow' , bg='blue' , font=('Helvetica' , 30 , 'bold') )
+                           Thankyou.pack(padx=10 , pady=20)
+                           rusure['text'] = f'Thank you!'
                            entry2.forget()
                            button2.forget()
                            button3.forget()
@@ -287,6 +291,7 @@ class withdraw(tk.Frame):
                       comeback.pack()
                       entry2.forget()
                       agree.forget()
+                      disagree.forget()
                       wb.save('raziq.xlsx')
 
 
@@ -494,17 +499,213 @@ class bill2(tk.Frame):
            tk.Frame.__init__(self , parent)
            self.controller = controller
            self.configure(bg='blue')
-           bill2 = tk.Label(self , text='Your Water bill is :' ,  fg='yellow' , font=('Helvetica' , 35  , 'bold') , bg='blue' )
-           bill2.pack()
-           price = tk.Label(self , text=f'RM {row[4].value}' , font=('Helvetica' , 40  , 'bold') , fg='yellow' , bg='blue' )
-           price.pack(padx=10 , pady=20)
-           entry3 = tk.Entry(self , width=25 , font=('Helvetica' , 30))
-           entry3.pack()
-           pay = tk.Button(self , text='Pay' , width=10 , fg='black' , bg='yellow' , font=('Helvetica' , 25))
-           pay.pack(pady=20 , padx=10)
-           comeback = tk.Button(self , text='Return' , width=10 , fg='black' , bg='yellow' , font=('Helvetica' , 25) , command=lambda:controller.show_frame('bill'))
-           comeback.pack(pady=20 , padx=10)
 
+           if (row[4].value) != 0:
+
+                    bill2 = tk.Label(self , text='Your Water bill is :' ,  fg='yellow' , font=('Helvetica' , 35  , 'bold') , bg='blue' )
+                    bill2.pack()
+                    price = tk.Label(self , text=f'RM {row[4].value}' , font=('Helvetica' , 40  , 'bold') , fg='yellow' , bg='blue' )
+                    price.pack(padx=10 , pady=20)
+                    entry4 = tk.Entry(self , width=25 , font=('Helvetica' , 30))
+                    entry4.pack()
+                    error = tk.Label(self , text='' , font=('Helvetica' , 25 , 'bold') , fg='yellow' , bg='blue' )
+                    error.pack(padx=10 , pady=20)
+                    pay = tk.Button(self , text='Pay' , width=10 , fg='black' , bg='yellow' , font=('Helvetica' , 25) , command=lambda:deducbill2())
+                    pay.pack(pady=20 , padx=10)
+                    comeback = tk.Button(self , text='Return' , width=10 , fg='black' , bg='yellow' , font=('Helvetica' , 25) , command=lambda:controller.show_frame('bill'))
+                    comeback.pack(pady=20 , padx=10)
+
+
+                    def deducbill2():
+                       try:
+                          float(entry4.get())
+                          price.forget()
+                          bill2['text'] = 'Are you sure?'
+                          pay.forget()
+                          comeback.forget()
+                          agree = tk.Button(self , text='yes' , fg='black' , bg='yellow' , font=('Helvetica' , 25) , width=20 , command=lambda:deduc2()  )
+                          agree.pack(padx=10 , pady=20)
+                          stepback = tk.Button(self , text='no' ,  fg='black' , bg='yellow' , font=('Helvetica' , 25) , width=20 , command=lambda:no())
+                          stepback.pack()
+                
+
+
+
+                       except ValueError:
+                          error['text'] = 'Invalid input!'
+
+
+
+
+                       def no():
+                          bill2['text'] = 'Enter your amount:'
+                          pay.pack()
+                          agree.forget()
+                          stepback.forget()
+                       
+                      
+
+
+
+
+                       def deduc2():
+                           minus = float(row[4].value) - float(entry4.get())
+                           row[4].value = minus
+ 
+                           if row[4].value != 0:
+                                 bill2['text'] = 'Thank You!'
+                                 price2 = tk.Label(self , text=f'Your current balance is RM {row[4].value}' , bg='blue' , fg='yellow' , font=('Helvetica' , 30 , 'bold') ) 
+                                 price2.pack(padx=10 , pady=20)
+                                 entry4.forget()
+                                 agree.forget()
+                                 stepback.forget()
+                                 comeback = tk.Button(self , text='Return' , bg='yellow' , fg='black' , font=('Helvetica' , 25) , command=lambda:restart() )
+                                 comeback.pack(padx=10  ,pady=20)
+                                 wb.save('raziq.xlsx')
+
+
+                           else:
+                                 congrats = tk.Label(self , text='Congratulations!' ,  bg='blue' , fg='yellow' , font=('Helvetica' , 30 , 'bold'))
+                                 congrats.pack(padx=10  ,pady=20)
+                                 fully_paid = tk.Label(self , text='Your bill is fully-paid!' , bg='blue' , fg='yellow' , font=('Helvetica' , 30 , 'bold'))
+                                 fully_paid.pack(padx=10 , pady=20)
+                                 entry4.forget()
+                                 agree.forget()
+                                 stepback.forget()
+                                 bill2.forget()
+                                 comeback = tk.Button(self , text='Return' , bg='yellow' , fg='black' , font=('Helvetica' , 25) , command=lambda:restart() )
+                                 comeback.pack(padx=10  ,pady=10)
+                                 wb.save('raziq.xlsx')
+
+                      
+
+
+                       def restart():
+                          app.destroy()
+                          os.startfile('ui.pyw')
+
+
+           else:
+               tk.Frame.__init__(self ,parent)
+               self.controller = controller
+               self.configure(bg='blue')
+               congrats = tk.Label(self , text='Congratulations!' , bg='blue' , fg='yellow' , font=('Helvetica' , 30 , 'bold'))
+               congrats.pack()
+               congrats2 = tk.Label(self , text='Your bill is fully paid!' , bg='blue' , fg='yellow' , font=('Helvetica' , 30 , 'bold'))
+               congrats2.pack(padx=10 , pady=20)
+               come = tk.Button(self , text='Return' , bg='yellow' , fg='black' , font=('Helvetica' , 25) , command=lambda:controller.show_frame('bill') )
+               come.pack(padx=10  ,pady=10)
+
+
+
+
+#================================= astro bill =========================================#
+               
+class bill2(tk.Frame):
+    def __init__(self, parent , controller):
+        wb = openpyxl.load_workbook('raziq.xlsx')
+        sheet = wb.active
+
+        for row in sheet.rows:
+           tk.Frame.__init__(self , parent)
+           self.controller = controller
+           self.configure(bg='blue')
+
+           if (row[4].value) != 0:
+
+                    bill2 = tk.Label(self , text='Your Water bill is :' ,  fg='yellow' , font=('Helvetica' , 35  , 'bold') , bg='blue' )
+                    bill2.pack()
+                    price = tk.Label(self , text=f'RM {row[4].value}' , font=('Helvetica' , 40  , 'bold') , fg='yellow' , bg='blue' )
+                    price.pack(padx=10 , pady=20)
+                    entry4 = tk.Entry(self , width=25 , font=('Helvetica' , 30))
+                    entry4.pack()
+                    error = tk.Label(self , text='' , font=('Helvetica' , 25 , 'bold') , fg='yellow' , bg='blue' )
+                    error.pack(padx=10 , pady=20)
+                    pay = tk.Button(self , text='Pay' , width=10 , fg='black' , bg='yellow' , font=('Helvetica' , 25) , command=lambda:deducbill2())
+                    pay.pack(pady=20 , padx=10)
+                    comeback = tk.Button(self , text='Return' , width=10 , fg='black' , bg='yellow' , font=('Helvetica' , 25) , command=lambda:controller.show_frame('bill'))
+                    comeback.pack(pady=20 , padx=10)
+
+
+                    def deducbill2():
+                       try:
+                          float(entry4.get())
+                          price.forget()
+                          bill2['text'] = 'Are you sure?'
+                          pay.forget()
+                          comeback.forget()
+                          agree = tk.Button(self , text='yes' , fg='black' , bg='yellow' , font=('Helvetica' , 25) , width=20 , command=lambda:deduc2()  )
+                          agree.pack(padx=10 , pady=20)
+                          stepback = tk.Button(self , text='no' ,  fg='black' , bg='yellow' , font=('Helvetica' , 25) , width=20 , command=lambda:no())
+                          stepback.pack()
+                
+
+
+
+                       except ValueError:
+                          error['text'] = 'Invalid input!'
+
+
+
+
+                       def no():
+                          bill2['text'] = 'Enter your amount:'
+                          pay.pack()
+                          agree.forget()
+                          stepback.forget()
+                       
+                      
+
+
+
+
+                       def deduc2():
+                           minus = float(row[4].value) - float(entry4.get())
+                           row[4].value = minus
+ 
+                           if row[4].value != 0:
+                                 bill2['text'] = 'Thank You!'
+                                 price2 = tk.Label(self , text=f'Your current balance is RM {row[4].value}' , bg='blue' , fg='yellow' , font=('Helvetica' , 30 , 'bold') ) 
+                                 price2.pack(padx=10 , pady=20)
+                                 entry4.forget()
+                                 agree.forget()
+                                 stepback.forget()
+                                 comeback = tk.Button(self , text='Return' , bg='yellow' , fg='black' , font=('Helvetica' , 25) , command=lambda:restart() )
+                                 comeback.pack(padx=10  ,pady=20)
+                                 wb.save('raziq.xlsx')
+
+
+                           else:
+                                 congrats = tk.Label(self , text='Congratulations!' ,  bg='blue' , fg='yellow' , font=('Helvetica' , 30 , 'bold'))
+                                 congrats.pack(padx=10  ,pady=20)
+                                 fully_paid = tk.Label(self , text='Your bill is fully-paid!' , bg='blue' , fg='yellow' , font=('Helvetica' , 30 , 'bold'))
+                                 fully_paid.pack(padx=10 , pady=20)
+                                 entry4.forget()
+                                 agree.forget()
+                                 stepback.forget()
+                                 bill2.forget()
+                                 comeback = tk.Button(self , text='Return' , bg='yellow' , fg='black' , font=('Helvetica' , 25) , command=lambda:restart() )
+                                 comeback.pack(padx=10  ,pady=10)
+                                 wb.save('raziq.xlsx')
+
+                      
+
+
+                       def restart():
+                          app.destroy()
+                          os.startfile('ui.pyw')
+
+
+           else:
+               tk.Frame.__init__(self ,parent)
+               self.controller = controller
+               self.configure(bg='blue')
+               congrats = tk.Label(self , text='Congratulations!' , bg='blue' , fg='yellow' , font=('Helvetica' , 30 , 'bold'))
+               congrats.pack()
+               congrats2 = tk.Label(self , text='Your bill is fully paid!' , bg='blue' , fg='yellow' , font=('Helvetica' , 30 , 'bold'))
+               congrats2.pack(padx=10 , pady=20)
+               come = tk.Button(self , text='Return' , bg='yellow' , fg='black' , font=('Helvetica' , 25) , command=lambda:controller.show_frame('bill') )
+               come.pack(padx=10  ,pady=10)
 
 #================================end program==========================================#
     
